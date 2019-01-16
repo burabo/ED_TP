@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tp_ed;
+package Users;
 
 import java.io.FileNotFoundException;
 
-
 /**
+ * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
- * @author David Alexandre
+ * Nome: GABRIEL Numero: Turma:LEI
  */
+
 public class TP_ED {
 
     /**
@@ -21,6 +17,7 @@ public class TP_ED {
     public static void main(String[] args) throws FileNotFoundException{
         // TODO code application logic here
         User[] teste2 = JsonReader.UserReader("SocialGraph.json");
+        
         
     }
     

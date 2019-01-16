@@ -1,33 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tp_ed;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+package Users;
 
 /**
+ * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
- * @author David Alexandre
+ * Nome: GABRIEL Numero: Turma:LEI
  */
+
 public class User {
-    
+
     private int id;
     private String nome, email;
     private int idade;
     private String[] skills;
     formacaoAcademica[] fa;
     cargosProfissionais[] cp;
-    mencoes[] mencoes;
-    contacts[] contactos;
+    private int[] contactos;
+    private int[] mencoes;
     private int visualizacoes;
+
+    public int[] getContactos() {
+        return contactos;
+    }
+
+    public void setContactos(int[] contactos) {
+        this.contactos = contactos;
+    }
+
+    public int[] getMencoes() {
+        return mencoes;
+    }
+
+    public void setMencoes(int[] mencoes) {
+        this.mencoes = mencoes;
+    }
 
     public int getId() {
         return id;
@@ -69,37 +74,23 @@ public class User {
         this.skills = skills;
     }
 
-    public formacaoAcademica[] getFa() {
+    public formacaoAcademica[] getFA() {
         return fa;
     }
 
-    public void setFa(formacaoAcademica[] fa) {
+    public void setFA(formacaoAcademica[] fa) {
         this.fa = fa;
     }
 
-    public cargosProfissionais[] getCp() {
+    public cargosProfissionais[] getCP() {
         return cp;
     }
 
-    public void setCp(cargosProfissionais[] cp) {
+    public void setCP(cargosProfissionais[] cp) {
         this.cp = cp;
     }
 
-    public mencoes[] getMencoes() {
-        return mencoes;
-    }
-
-    public void setMencoes(mencoes[] mencoes) {
-        this.mencoes = mencoes;
-    }
-
-    public contacts[] getContactos() {
-        return contactos;
-    }
-
-    public void setContactos(contacts[] contactos) {
-        this.contactos = contactos;
-    }
+    
 
     public int getVisualizacoes() {
         return visualizacoes;
@@ -108,11 +99,15 @@ public class User {
     public void setVisualizacoes(int visualizacoes) {
         this.visualizacoes = visualizacoes;
     }
-    
-    
+
 }
 
 class formacaoAcademica {
+
+    public formacaoAcademica(int ano, String formacao) {
+        this.ano = ano;
+        this.formacao = formacao;
+    }
 
     private int ano;
     private String formacao;
@@ -120,16 +115,12 @@ class formacaoAcademica {
 
 class cargosProfissionais {
 
+    public cargosProfissionais(int ano, String cargo, String empresa) {
+        this.ano = ano;
+        this.cargo = cargo;
+        this.empresa = empresa;
+    }
+
     private int ano;
     private String cargo, empresa;
 }
-
-class mencoes {
-    private int UserID;
-}
-class contacts {
-    private int UserID;
-}
-
-
-
