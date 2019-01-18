@@ -3,7 +3,7 @@ package Users;
 /**
  * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
- * Nome: GABRIEL Numero: Turma:LEI
+ * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
 
 public class User {
