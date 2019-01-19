@@ -9,27 +9,15 @@ import java.io.FileNotFoundException;
  */
 public class TP_ED {
 
-    /**
-     * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
-     */
     public static void main(String[] args) throws FileNotFoundException {
 
         User[] user = JsonReader.UserReader("SocialGraph.json");
         Grafo g1 = new Grafo();
-        for (int i = 0; i < user.length; i++) { //adiciona os vértices
-            g1.addVertex(user[i]);
-            if ((i + 1) < user.length) { //aqui ele liga cada vértice de valor i para i+1. É PRECISO PERCORRER AO CONTRARIO E AINDA ME FALTA PASSAR O PESO (VISUALIZAÇÕES) DÁ ME ERRO
-                g1.addEdge(user[i], user[i+1]);
-            } else {
-                g1.addEdge(user[i], user[i + 1 - user.length]);
-            }
+        g1.LoadVertex(user);
+        g1.LoadEdges();
 
-        }
-
-        g1.EdgeLoad(user);
         System.out.println(g1.toString());
-        
+
 
         /*
                 OrientedNetwork newNetwork = new OrientedNetwork();
