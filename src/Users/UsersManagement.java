@@ -15,13 +15,12 @@ import org.json.simple.parser.ParseException;
  *
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
-
-public class JsonReader {
+public class UsersManagement<T> extends UsersNetwork<T> {
 
     public static User[] UserReader(String name) throws FileNotFoundException {
         JSONParser parser = new JSONParser();
         User[] toReturn = null;
- 
+
         try {
             Object obj = parser.parse(new FileReader(name));
             JSONObject jsonObject = (JSONObject) obj;
@@ -98,9 +97,45 @@ public class JsonReader {
             }
         } catch (IOException | ParseException ex) {
             System.out.println("Erro na leitura dos dados do ficheiro JSON");
-            Logger.getLogger(JsonReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsersManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return toReturn;
+    }
+
+    public void LoadVertex(User[] pessoas) {
+        for (User pessoa : pessoas) { //adiciona os vértices
+            this.addVertex(pessoa);
+        }
+    }
+
+    public void LoadEdges() {
+        Object[] vetor_vertices = this.vertices;
+        for (int c = 0; c < vetor_vertices.length; c++) {
+            User user1 = (User) vetor_vertices[c];
+            for (int v = 0; v < vetor_vertices.length; v++) {
+                User user2 = (User) vetor_vertices[v];
+                if (c < v) {
+                    if (user1 != null) {
+                        for (int k : user1.getContactos()) {
+                            if (user2 != null) {
+                                if (k == user2.getId()) {
+                                    this.addEdge(user1, user2, ((double) 1 / (double) user1.getVisualizacoes()));
+                                    this.addEdge(user2, user1, ((double) 1 / (double) user2.getVisualizacoes()));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public String GraphTable() { //fazer
+        return "";
+    }
+
+    public String AdjTable() { //fazer
+        return "";
     }
 }
