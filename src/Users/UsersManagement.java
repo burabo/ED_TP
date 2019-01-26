@@ -107,7 +107,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 
     public void LoadVertex(User[] pessoas) {
         for (User pessoa : pessoas) { //adiciona os vértices
-            this.addVertex(pessoa);
+            this.addVertex((T)pessoa);
         }
     }
 

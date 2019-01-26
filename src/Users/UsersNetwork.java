@@ -1,15 +1,20 @@
 package Users;
 
-import Exceptions.EmptyCollectionException;
-import Exceptions.QueueEmptyException;
-import Interfaces.NetworkADT;
-import LinkedBinaryTree.ArrayUnorderedList;
-import LinkedBinaryTree.Graph;
-import LinkedBinaryTree.LinkedQueue;
-import LinkedBinaryTree.LinkedStack;
+//import Exceptions.EmptyCollectionException;
+//import Exceptions.QueueEmptyException;
+//import Interfaces.NetworkADT;
+//import LinkedBinaryTree.ArrayUnorderedList;
+//import LinkedBinaryTree.Graph;
+//import LinkedBinaryTree.LinkedQueue;
+//import LinkedBinaryTree.LinkedStack;
+import interfaces.NetworkADT;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pt01.ex04.ArrayUnorderedList;
+import queueListedLink.ListedLinkQueue;
+import stackListedLink.LinkedListStack;
+
 
 /**
  * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
@@ -19,10 +24,19 @@ import java.util.logging.Logger;
 public class UsersNetwork<T> implements NetworkADT<T> {
 
     protected final int DEFAULT_CAPACITY = 2;
-    protected int numVertices = 0;   // number of vertices in the graph
+    protected int count; // used in iteratorDSF
+    protected int numVertices;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
     protected T[] vertices;   // values of vertices
+    
+     public UsersNetwork() {
+        numVertices = 0;
+        count = 0;
+        this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
+    }
 
     @Override
     public void addEdge(Object vertex1, Object vertex2, double weight) { //grafo pesado / network
@@ -30,6 +44,10 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     private void addEdge(int index1, int index2, double weight) { //grafo pesado / network
+          if (indexIsValid(index1) && indexIsValid(index2)) {
+            adjMatrix[index1][index2] = true;
+            adjMatrix[index2][index1] = true;
+        }
         if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
             NetworkMatrix[index1][index2] = weight;
             NetworkMatrix[index2][index1] = weight;
@@ -112,20 +130,22 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
     @Override
     public Iterator iteratorBFS(T startVertex) {
-        try {
+//        try {
             return iteratorBFS(getIndex(startVertex));
-        } catch (QueueEmptyException ex) {
-            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+//        } catch (QueueEmptyException ex) {
+//            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
     }
 
-    private Iterator iteratorBFS(int startIndex) throws QueueEmptyException {
+    private Iterator iteratorBFS(int startIndex) //throws QueueEmptyException 
+    {
 
         Integer x;
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
+        //LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
+        //ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+        ListedLinkQueue<Integer> traversalQueue = new ListedLinkQueue<Integer>();
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
-
         if (!indexIsValid(startIndex)) {
             return resultList.iterator();
         }
@@ -157,19 +177,23 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     public Iterator iteratorDFS(T startVertex) {
-        try {
+//        try {
             return iteratorDFS(getIndex(startVertex));
-        } catch (EmptyCollectionException ex) {
-            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+//        } catch (EmptyCollectionException ex) {
+//            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
     }
 
-    private Iterator iteratorDFS(int startIndex) throws EmptyCollectionException {
+    private Iterator iteratorDFS(int startIndex) //throws EmptyCollectionException 
+    {
         Integer x;
         boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+//        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
+        LinkedListStack<Integer> traversalStack = new LinkedListStack<>();//Novo stack
+
+        ArrayUnorderedList<T> resultList;
+        resultList = new ArrayUnorderedList<>();
         boolean[] visited = new boolean[numVertices];
         if (!indexIsValid(startIndex)) {
             return resultList.iterator();
@@ -177,9 +201,10 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         for (int i = 0; i < numVertices; i++) {
             visited[i] = false;
         }
-        traversalStack.push(new Integer(startIndex));
+        traversalStack.push(startIndex);
         resultList.addToRear(vertices[startIndex]);
         visited[startIndex] = true;
+        count++;
 
         while (!traversalStack.isEmpty()) {
             x = traversalStack.peek();
@@ -189,11 +214,12 @@ public class UsersNetwork<T> implements NetworkADT<T> {
              * on the stack
              */
             for (int i = 0; (i < numVertices) && !found; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalStack.push(new Integer(i));
+                if (adjMatrix[x][i] && !visited[i]) {
+                    traversalStack.push(i);
                     resultList.addToRear(vertices[i]);
                     visited[i] = true;
                     found = true;
+                    count++;
                 }
             }
             if (!found && !traversalStack.isEmpty()) {
@@ -214,9 +240,9 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public boolean isConnected() { //FALTA FAZER
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean isConnected() { //Uses the dfs iterator
+            return count == numVertices;
+        }
 
     @Override
     public int size() {
