@@ -19,10 +19,17 @@ import java.util.logging.Logger;
 public class UsersNetwork<T> implements NetworkADT<T> {
 
     protected final int DEFAULT_CAPACITY = 2;
-    protected int numVertices = 0;   // number of vertices in the graph
+    protected int numVertices;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
     protected T[] vertices;   // values of vertices
+
+    public UsersNetwork() {
+        numVertices = 0;
+        this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
+    }
 
     @Override
     public void addEdge(Object vertex1, Object vertex2, double weight) { //grafo pesado / network
@@ -33,9 +40,11 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
             NetworkMatrix[index1][index2] = weight;
             NetworkMatrix[index2][index1] = weight;
+            adjMatrix[index1][index2] = true;
+            adjMatrix[index2][index1] = true;
         }
     }
-
+    
     @Override
     public void addEdge(Object vertex1, Object vertex2) { //grafo
         addEdge(getIndex((T) vertex1), getIndex((T) vertex2));
@@ -75,7 +84,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-        public void addVertex(T vertex) {
+    public void addVertex(T vertex) {
         if (numVertices == vertices.length) {
             expandCapacity();
         }
@@ -107,6 +116,8 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         if (indexIsValid(index1) && indexIsValid(index2)) {
             adjMatrix[index1][index2] = false;
             adjMatrix[index2][index1] = false;
+            NetworkMatrix[index1][index2] = 0;
+            NetworkMatrix[index2][index1] = 0;
         }
     }
 
@@ -238,8 +249,8 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 newAdjMatrix[i][j] = adjMatrix[i][j];
             }
         }
-        
-          for (int i = 0; i < NetworkMatrix.length; i++) {
+
+        for (int i = 0; i < NetworkMatrix.length; i++) {
             for (int j = 0; j < NetworkMatrix.length; j++) {
                 newNetworkMatrix[i][j] = NetworkMatrix[i][j];
             }

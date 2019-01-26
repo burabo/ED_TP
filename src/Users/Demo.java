@@ -14,12 +14,12 @@ public class Demo {
         User[] user = UsersManagement.UserReader("SocialGraph.json");
         UsersManagement g1 = new UsersManagement();
         g1.LoadVertex(user);
-        //g1.LoadEdges();
-
-        System.out.println(g1.toString());
-        //System.out.println(g1.GraphTable());
-        //System.out.println(g1.NetworkTable());
-
+        g1.LoadEdges();
+        g1.EditEdge(0, 1, 2, 3); //ñ funciona
+        //System.out.println(g1.toString());
+        System.out.println(g1.GraphTable());
+        System.out.println(g1.NetworkTable());
+        System.out.println(g1.IsNetworkComplete());
 
        
     }

@@ -33,16 +33,14 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 int j;
                 User tmpUser = new User();
                 JSONObject person = (JSONObject) users.get(i);
-
-                // LER INTEIROS E STRINGS
+ 
                 tmpUser.setId(Integer.parseInt(person.get("id").toString()));
                 tmpUser.setNome(person.get("nome").toString());
                 tmpUser.setIdade(Integer.parseInt(person.get("idade").toString()));
                 tmpUser.setEmail(person.get("email").toString());
                 tmpUser.setVisualizacoes(Integer.parseInt(person.get("visualizacoes").toString()));
 
-                // LER FORMACAO ACADEMICA
-                JSONArray jsonFormacoes = (JSONArray) person.get("formacaoAcademica");
+                JSONArray jsonFormacoes = (JSONArray) person.get("formacaoAcademica"); //Formação Académica
                 formacaoAcademica[] tmpFormacoes = new formacaoAcademica[jsonFormacoes.size()];
                 for (j = 0; j < jsonFormacoes.size(); j++) {
                     JSONObject tmpFormacao = (JSONObject) jsonFormacoes.get(j);
@@ -54,8 +52,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 }
                 tmpUser.setFA(tmpFormacoes);
 
-                // LER CARGOS PROFICIONAIS
-                JSONArray jsonCargos = (JSONArray) person.get("cargosProfissionais");
+                JSONArray jsonCargos = (JSONArray) person.get("cargosProfissionais"); //Cargos Profissionais
                 cargosProfissionais[] tmpCargos = new cargosProfissionais[jsonCargos.size()];
                 for (j = 0; j < jsonCargos.size(); j++) {
                     JSONObject tmpCargo = (JSONObject) jsonCargos.get(j);
@@ -68,16 +65,14 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 }
                 tmpUser.setCP(tmpCargos);
 
-                // LER SKILLS
-                JSONArray jsonSkills = (JSONArray) person.get("skills");
+                JSONArray jsonSkills = (JSONArray) person.get("skills"); //skills
                 String[] tmpSkills = new String[jsonSkills.size()];
                 for (j = 0; j < jsonSkills.size(); j++) {
                     tmpSkills[j] = jsonSkills.get(j).toString();
                 }
                 tmpUser.setSkills(tmpSkills);
 
-                // LER CONTACTOS
-                JSONArray jsonContacts = (JSONArray) person.get("contacts");
+                JSONArray jsonContacts = (JSONArray) person.get("contacts"); //contactos
                 int[] tmpContacts = new int[jsonContacts.size()];
                 for (j = 0; j < jsonContacts.size(); j++) {
                     JSONObject tmpContact = (JSONObject) jsonContacts.get(j);
@@ -85,8 +80,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 }
                 tmpUser.setContactos(tmpContacts);
 
-                // LER MENCOES
-                JSONArray jsonMencoes = (JSONArray) person.get("mencoes");
+                JSONArray jsonMencoes = (JSONArray) person.get("mencoes"); //menções
                 int[] tmpMencoes = new int[jsonMencoes.size()];
                 for (j = 0; j < jsonMencoes.size(); j++) {
                     JSONObject tmpMencao = (JSONObject) jsonMencoes.get(j);
@@ -107,7 +101,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 
     public void LoadVertex(User[] pessoas) {
         for (User pessoa : pessoas) { //adiciona os vértices
-            this.addVertex(pessoa);
+            this.addVertex((T) pessoa);
         }
     }
 
@@ -180,5 +174,32 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
         return toReturn;
 
+    }
+
+    public String IsNetworkComplete() {
+        int count = 0;
+        for (int i = 0; i < this.numVertices; i++) {
+            for (int j = 0; j < this.numVertices; j++) {
+                if (adjMatrix[i][j] == true) {
+                    count++;
+                }
+            }
+        }
+        if (count == (this.numVertices * this.numVertices)) {
+            return "Matriz de Adjacência completa";
+        } else {
+            return "Matriz de Adjacência Imcompleta";
+        }
+
+    }
+
+    public void EditEdge(int index1, int index2, int newindex1, int newindex2) {
+        this.removeEdge(index1, index2);
+        this.addEdge(newindex1, newindex2);
+    }
+
+    public void EditEdge(int index1, int index2, int newindex1, int newindex2, double weight) {
+        this.removeEdge(index1, index2);
+        this.addEdge(newindex1, newindex2, weight);
     }
 }
