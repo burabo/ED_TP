@@ -19,12 +19,14 @@ import java.util.logging.Logger;
 public class UsersNetwork<T> implements NetworkADT<T> {
 
     protected final int DEFAULT_CAPACITY = 2;
+    protected int count = 0; //used in DFS
     protected int numVertices;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
     protected T[] vertices;   // values of vertices
 
     public UsersNetwork() {
+        count = 0;
         numVertices = 0;
         this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
@@ -44,7 +46,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
             adjMatrix[index2][index1] = true;
         }
     }
-    
+
     @Override
     public void addEdge(Object vertex1, Object vertex2) { //grafo
         addEdge(getIndex((T) vertex1), getIndex((T) vertex2));
@@ -191,6 +193,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         traversalStack.push(new Integer(startIndex));
         resultList.addToRear(vertices[startIndex]);
         visited[startIndex] = true;
+        count++;
 
         while (!traversalStack.isEmpty()) {
             x = traversalStack.peek();
@@ -204,6 +207,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                     traversalStack.push(new Integer(i));
                     resultList.addToRear(vertices[i]);
                     visited[i] = true;
+                    count++;
                     found = true;
                 }
             }
@@ -225,8 +229,8 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public boolean isConnected() { //FALTA FAZER
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isConnected() { 
+        return count == numVertices;
     }
 
     @Override
