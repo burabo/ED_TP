@@ -3,6 +3,8 @@ package Users;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -131,11 +133,52 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public String GraphTable() { //fazer
-        return "";
+    public String NetworkTable() {
+        BigDecimal bd;
+        String toReturn = "\nMatriz de Adjacência Network:\n\n";
+        toReturn += " \t";
+        for (int x = 0; x < NetworkMatrix.length; x++) {
+            toReturn += "  " + x + "   |  ";
+        }
+        toReturn += "\n\n";
+        for (int i = 0; i < NetworkMatrix.length; i++) {
+
+            toReturn += "" + i + "\t";
+            for (int j = 0; j < NetworkMatrix.length; j++) {
+                bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
+                toReturn += bd + " |  ";
+
+            }
+            toReturn += "\n";
+
+        }
+
+        return toReturn;
     }
 
-    public String AdjTable() { //fazer
-        return "";
+    public String GraphTable() {
+
+        String toReturn = "\nMatriz de Adjacência:\n\n";
+        toReturn += " \t";
+        for (int x = 0; x < this.numVertices; x++) {
+            toReturn += x + " ";
+        }
+        toReturn += "\n\n";
+        for (int i = 0; i < this.numVertices; i++) {
+
+            toReturn += "" + i + "\t";
+            for (int j = 0; j < this.numVertices; j++) {
+
+                if (adjMatrix[i][j] == true) {
+                    toReturn += "1 ";
+                } else {
+                    toReturn += "0 ";
+                }
+            }
+            toReturn += "\n";
+
+        }
+        return toReturn;
+
     }
 }

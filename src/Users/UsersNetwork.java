@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class UsersNetwork<T> implements NetworkADT<T> {
 
     protected final int DEFAULT_CAPACITY = 2;
-    protected int numVertices;   // number of vertices in the graph
+    protected int numVertices = 0;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
     protected T[] vertices;   // values of vertices
@@ -75,11 +75,11 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public void addVertex(Object vertex) {
+        public void addVertex(T vertex) {
         if (numVertices == vertices.length) {
             expandCapacity();
         }
-        vertices[numVertices] = (T) vertex;
+        vertices[numVertices] = vertex;
         for (int i = 0; i <= numVertices; i++) {
             adjMatrix[numVertices][i] = false;
             adjMatrix[i][numVertices] = false;
@@ -226,6 +226,8 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     protected void expandCapacity() {
         T[] newVertices = (T[]) (new Object[vertices.length + 1]);
         boolean[][] newAdjMatrix = new boolean[adjMatrix.length + 1][adjMatrix.length + 1];
+        double[][] newNetworkMatrix = new double[NetworkMatrix.length + 1][NetworkMatrix.length + 1];
+
         for (int i = 0; i < vertices.length; i++) {
             newVertices[i] = vertices[i];
 
@@ -236,9 +238,16 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 newAdjMatrix[i][j] = adjMatrix[i][j];
             }
         }
+        
+          for (int i = 0; i < NetworkMatrix.length; i++) {
+            for (int j = 0; j < NetworkMatrix.length; j++) {
+                newNetworkMatrix[i][j] = NetworkMatrix[i][j];
+            }
+        }
 
         vertices = newVertices;
         adjMatrix = newAdjMatrix;
+        NetworkMatrix = newNetworkMatrix;
     }
 
     @Override

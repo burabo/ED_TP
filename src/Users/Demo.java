@@ -14,7 +14,7 @@ public class Demo {
         User[] user = UsersManagement.UserReader("SocialGraph.json");
         UsersManagement g1 = new UsersManagement();
         g1.LoadVertex(user);
-        g1.LoadEdges();
+        //g1.LoadEdges();
 
         System.out.println(g1.toString());
         //System.out.println(g1.GraphTable());
