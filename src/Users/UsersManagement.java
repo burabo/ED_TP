@@ -169,6 +169,22 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 
     }
 
+    public void notReachable(User[] users) {
+        String email;
+        System.out.println("Introduza o email do utilizador: ");
+        email = scanner.next();
+        for (int i = 0; i < users.length; i++) {
+            if (users[i].getEmail().equals(email)) {
+                for (int j = 0; j < adjMatrix.length; j++) {
+                    if(adjMatrix[i][j] == false){
+                        System.out.println("Utilizador não alcançável" + vertices[j]);
+                    }
+                }
+
+            }
+        }
+    }
+
     public void findUsers(User[] user) {
         String skill, empresa, email;
         System.out.println("Introduza o email do utilizador: ");
@@ -197,6 +213,24 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             }
 
         }
+    }
+
+    public void findUsersThatWorkedInCompany(User[] user) {
+
+        String empresa, email;
+        System.out.println("Introduza a empresa pretendida");
+        empresa = scanner.next();
+        System.out.println("Introduza o email do utilizador: ");
+        email = scanner.next();
+
+    }
+
+    public void doWorkersConnect(User[] user) {
+        String empresa, email;
+        System.out.println("Introduza a empresa pretendida");
+        empresa = scanner.next();
+        System.out.println("Introduza o email do utilizador: ");
+        email = scanner.next();
     }
 
     public User searchEmail(User[] users) {

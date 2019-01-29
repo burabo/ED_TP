@@ -262,8 +262,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
-//        int a = 0;
-//        while (a < 3) {
+            
             actual = verticeCaminho;
 
             for (i = 0; i < numVertices; i++) {
@@ -280,8 +279,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
             distancia[verticeCaminho] += menor;
             menor = 9999;
             naoVisitados.remove(vertices[verticeCaminho]);
-            //System.out.println(naoVisitados.remove(vertices[verticeCaminho]));
-//            a++;
+
             System.out.println("Vértice actual:" + actual);
 
         }

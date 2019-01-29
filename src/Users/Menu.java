@@ -35,7 +35,7 @@ public class Menu {
             "Editar ligações", "Editar visualizações", "É completo?", "É conexo?",
             "Descobrir o caminho mais curto entre 2 utilizadores",
             "Utilizadores alcançáveis a partir de um utilizador",
-            "Utilizadores não alcançáveis a partir de um utilizador (Falta)",
+            "Utilizadores não alcançáveis a partir de um utilizador",
             "Verificar a partir de um dado utilizador qual a lista de utilizadoresque fazem parte dos contactos da lista que têm determinada skill e trabalham em determinada empresa",
             "Lista de utilizadores de uma empresa passada como parâmetro que estão relacionados com um utilizador também passado como parâmetro(Falta)",
             "Verificar que os utilizadores que ocupam um cargo numa empresa não estão relacionados com utilizadores de outras empresas(Falta)",
@@ -104,6 +104,7 @@ public class Menu {
 
                 //Utilizadores não alcançáveis a partir de um utilizador 
                 case 8:
+                    g1.notReachable(8);
                     break;
 
                 //Verificar a partir de um dado utilizador qual a lista de utilizadores que fazem parte dos contactos
@@ -114,6 +115,7 @@ public class Menu {
 
                 //Apresentar uma lista de utilizadores de uma empresa passada...
                 case 10:
+                    g1.findUsersThatWorkedInCompany(user);
                     break;
                 //Verificar que os utilizadores que ocupam um cargo numa empresa....
                 case 11:
