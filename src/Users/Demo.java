@@ -1,6 +1,7 @@
 package Users;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -16,7 +17,12 @@ public class Demo {
         UsersManagement g1 = new UsersManagement();
         g1.LoadVertex(user);
         g1.LoadEdges();
-        g1.EditEdge(0, 1, 2, 3); //ñ funciona
+        //g1.djisktra();
+        for(int i = 0; i < user.length;i++){
+        System.out.println(Arrays.toString(user[i].getCP()).toString());    
+        }
+        user[0].getFA();
+                //g1.EditEdge(0, 1, 2, 3,10); //ñ funciona
         //System.out.println(g1.toString());
         System.out.println(g1.GraphTable());
         System.out.println(g1.NetworkTable());

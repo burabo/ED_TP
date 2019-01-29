@@ -1,5 +1,7 @@
 package Users;
 
+import java.util.Arrays;
+
 /**
  * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
@@ -97,6 +99,19 @@ public class User {
         this.visualizacoes = visualizacoes;
     }
 
+    @Override
+    public String toString() {
+        return "User: " + id
+                + "\n\t|Nome: " + nome
+                + "\n\t|Email: " + email
+                + "\n\t|Idade: " + idade
+                + "\n\t|Skills: " + Arrays.toString(skills)
+                + "\n\t|Formação Académica: " + Arrays.toString(fa)
+                + "\n\t|Cargos Profissionais: " + Arrays.toString(cp)
+                + "\n\t|Contactos: " + Arrays.toString(contactos)
+                + "\n\t|Menções: " + Arrays.toString(mencoes)
+                + "\n\t|Visualizações: " + visualizacoes;
+    }
 }
 
 class formacaoAcademica {
@@ -125,7 +140,10 @@ class formacaoAcademica {
         this.formacao = formacao;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Ano: " + ano + ", Formação: " + formacao;
+    }
 }
 
 class cargosProfissionais {
@@ -163,4 +181,8 @@ class cargosProfissionais {
         this.empresa = empresa;
     }
 
+    @Override
+    public String toString() {
+        return "Ano: " + ano + ", Cargo: " + cargo + ", Empresa: " + empresa;
+    }
 }

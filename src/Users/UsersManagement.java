@@ -136,8 +136,8 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         System.out.println("Nome: " + user.getNome());
         System.out.println("Idade: " + user.getIdade());
         System.out.println("Email: " + user.getEmail());
-        System.out.println("Formação Académica: " + user.getFA().toString());
-        System.out.println("Cargos Profissionais: " + user.getCP().toString());
+        System.out.println("Formação Académica: " + Arrays.toString(user.getFA()));
+        System.out.println("Cargos Profissionais: " + Arrays.toString(user.getCP()));
         System.out.println("Skills: " + Arrays.toString(user.getSkills()));
         System.out.println("Contactos: " + Arrays.toString(user.getContactos()));
         System.out.println("Menções: " + Arrays.toString(user.getMencoes()));

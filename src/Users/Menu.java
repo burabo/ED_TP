@@ -44,10 +44,11 @@ public class Menu {
 
         do {
             do {
+                System.out.println("\n\n");
                 for (int i = 0; i < options.length; i++) {
                     System.out.println((i + 1) + ". " + options[i]);
                 }
-                System.out.println("Introduza a opção pretendida: ");
+                System.out.print("\nIntroduza a opção pretendida: ");
                 option = scanner.nextInt();
             } while (option < 1 && option > 20);
 
@@ -104,7 +105,7 @@ public class Menu {
 
                 //Utilizadores não alcançáveis a partir de um utilizador 
                 case 8:
-                    g1.notReachable(8);
+                    g1.notReachable(user);
                     break;
 
                 //Verificar a partir de um dado utilizador qual a lista de utilizadores que fazem parte dos contactos
