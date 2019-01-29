@@ -1,9 +1,12 @@
 package Users;
 
+import LinkedBinaryTree.ArrayOrderedList;
+import LinkedBinaryTree.ArrayUnorderedList;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -176,8 +179,8 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         for (int i = 0; i < users.length; i++) {
             if (users[i].getEmail().equals(email)) {
                 for (int j = 0; j < adjMatrix.length; j++) {
-                    if(adjMatrix[i][j] == false){
-                        System.out.println("Utilizador não alcançável" + vertices[j]);
+                    if (adjMatrix[i][j] == false) {
+                        System.out.println(vertices[j]);
                     }
                 }
 
@@ -215,22 +218,56 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public void findUsersThatWorkedInCompany(User[] user) {
+    public String findUsersThatWorkedInCompany(User[] users, User user, String empresa) {
+        int i, j;
 
-        String empresa, email;
-        System.out.println("Introduza a empresa pretendida");
-        empresa = scanner.next();
-        System.out.println("Introduza o email do utilizador: ");
-        email = scanner.next();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
+        for (i = 0; i < numVertices; i++) {
+            for (j = 0; j < users[i].getCP().length; j++) {
+                if (users[i].cp[j].getEmpresa().equals(empresa)) {
+                    for (j = 0; j < users[i].getContactos().length; j++) {
+                        if (users[i].getContactos()[j] == user.getId()) {
+                            resultList.addToRear(vertices[i]);
+                        }
+                    }
+                }
+            }
+        }
+        return resultList.toString();
     }
 
-    public void doWorkersConnect(User[] user) {
-        String empresa, email;
-        System.out.println("Introduza a empresa pretendida");
-        empresa = scanner.next();
-        System.out.println("Introduza o email do utilizador: ");
-        email = scanner.next();
+    public void doWorkersConnect(User[] user, String empresa, String empresa2) {
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                for (int k = 0; k < user[i].cp.length; k++) {
+                    for (int l = 0; l < user[j].cp.length; l++) {
+                        if (user[i].cp[k].getEmpresa().equals(empresa) && user[j].cp[l].getEmpresa().equals(empresa2)
+                                || user[j].cp[l].getEmpresa().equals(empresa) && user[i].cp[k].getEmpresa().equals(empresa2)) {
+                            if (adjMatrix[i][j]) {
+                                System.out.println("Utilizadores " + user[i].getEmail() + " e " + user[j].getEmail() + " relacionam-se");
+                            } else {
+                                System.out.println("Utilizadores " + user[i].getEmail() + " e " + user[j].getEmail() + " não se relacionam");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void connectSkill(User[] users, String skill) {
+//
+//        ArrayOrderedList<T> menorCaminho = new ArrayOrderedList<>();
+//
+//        for (int i = 0; i < numVertices; i++) {
+//            for (int j = 0; j < users[i].getSkills().length; j++) {
+//                if (users[i].getSkills()[j].equals(skill)) {
+//                    menorCaminho.add(vertices[i]);
+//                }
+//            }
+//        }
+//            System.out.println(menorCaminho.toString());
     }
 
     public User searchEmail(User[] users) {

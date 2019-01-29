@@ -30,15 +30,15 @@ public class Menu {
 
         User newUser;
         int option;
-        String email;
+        String email, empresa, empresa2, skill;
         String options[] = {"Consultar informação relativa a um utilizador",
             "Editar ligações", "Editar visualizações", "É completo?", "É conexo?",
             "Descobrir o caminho mais curto entre 2 utilizadores",
             "Utilizadores alcançáveis a partir de um utilizador",
             "Utilizadores não alcançáveis a partir de um utilizador",
             "Verificar a partir de um dado utilizador qual a lista de utilizadoresque fazem parte dos contactos da lista que têm determinada skill e trabalham em determinada empresa",
-            "Lista de utilizadores de uma empresa passada como parâmetro que estão relacionados com um utilizador também passado como parâmetro(Falta)",
-            "Verificar que os utilizadores que ocupam um cargo numa empresa não estão relacionados com utilizadores de outras empresas(Falta)",
+            "Lista de utilizadores de uma empresa passada como parâmetro que estão relacionados com um utilizador também passado como parâmetro",
+            "Verificar que os utilizadores que ocupam um cargo numa empresa não estão relacionados com utilizadores de outras empresas",
             "Lista de utilizadores que contém um determinado skill no seu perfil ordenado pelo menor custo de ligação(Falta)",
             "Matriz de Adjacência", "Matriz de Adjacência Network"};
 
@@ -82,7 +82,7 @@ public class Menu {
                 //Descobrir o caminho mais curto entre 2 utilizadores
                 case 6:
                     System.out.println("\nCusto de cada caminho: \n");
-                    Iterator sp = g1.iteratorShortestPath(user[11], user[1]);
+                    Iterator sp = g1.iteratorShortestPath(user[4], user[0]);
                     while (sp.hasNext()) {
                         System.out.println(sp.next());
                     }
@@ -116,13 +116,26 @@ public class Menu {
 
                 //Apresentar uma lista de utilizadores de uma empresa passada...
                 case 10:
-                    g1.findUsersThatWorkedInCompany(user);
+                    System.out.println("Introduza a empresa pretendida");
+                    empresa = scanner.next();
+                    newUser = g1.searchEmail(user);
+                    System.out.println(g1.findUsersThatWorkedInCompany(user, newUser, empresa));
+                    
                     break;
                 //Verificar que os utilizadores que ocupam um cargo numa empresa....
                 case 11:
+
+                    System.out.println("Introduza a empresa A: ");
+                    empresa = scanner.next();
+                    System.out.println("Introduza a empresa B: ");
+                    empresa2 = scanner.next();
+                    g1.doWorkersConnect(user, empresa, empresa2);
                     break;
                 //Apresentar uma lista de utilizadores que contém um determinado skill...
                 case 12:
+                    System.out.println("Introduza a skill: ");
+                    skill = scanner.next();
+                    g1.connectSkill(user, skill);
                     break;
                 //Matriz de Adjacência    
                 case 13:
