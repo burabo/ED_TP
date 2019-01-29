@@ -1,6 +1,7 @@
 package Users;
 
 import Exceptions.EmptyCollectionException;
+import Exceptions.ListEmptyException;
 import Exceptions.QueueEmptyException;
 import Interfaces.NetworkADT;
 import LinkedBinaryTree.ArrayUnorderedList;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 public class UsersNetwork<T> implements NetworkADT<T> {
 
     protected final int DEFAULT_CAPACITY = 2;
-    protected int count = 0; //used in DFS
+    protected int count; //used in DFS
     protected int numVertices;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
@@ -169,6 +170,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         return resultList.iterator();
     }
 
+    @Override
     public Iterator iteratorDFS(T startVertex) {
         try {
             return iteratorDFS(getIndex(startVertex));
@@ -219,8 +221,44 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public Iterator iteratorShortestPath(Object startVertex, Object targetVertex) { //FALTA FAZER
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Iterator iteratorShortestPath(Object startVertex, Object targetVertex) {
+        try {
+            return iteratorShortestPath(getIndex((T) startVertex), getIndex((T) targetVertex));
+        } catch (EmptyCollectionException ex) {
+            Logger.getLogger(UsersNetwork.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    private Iterator iteratorShortestPath(int startVertex, int targetVertex) throws EmptyCollectionException { //FALTA FAZER
+
+        Integer x, i = startVertex, j, ponto;
+        double menor = 9999;
+        boolean found;
+
+        LinkedStack<Integer> verticeStack = new LinkedStack<>(); // Vértices visitados
+        ArrayUnorderedList<Double> valueList = new ArrayUnorderedList<>(); // Valores dos vértices 
+        verticeStack.push(startVertex);
+        valueList.addToRear(NetworkMatrix[startVertex][startVertex]);
+                
+        while (verticeStack.peek()!= targetVertex){
+            for (j = 0; (j < numVertices); j++) {
+                if (NetworkMatrix[i][j] != 0 && NetworkMatrix[i][j] < menor) {
+                    menor = NetworkMatrix[i][j]; // actualiza o menor
+                    //ponto = j;
+                }
+            }
+            if (menor == 0) {
+                
+            }
+            
+            valueList.addToRear(menor);
+            verticeStack.push(getIndex(vertices[j]));
+            menor = 9999;
+            i = j;
+        }
+        return valueList.iterator();
+
     }
 
     @Override
@@ -229,7 +267,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public boolean isConnected() { 
+    public boolean isConnected() {
         return count == numVertices;
     }
 
