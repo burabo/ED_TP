@@ -101,28 +101,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         return toReturn;
     }
 
-    public void LoadProfile(User[] pessoas, String email) {
-        boolean cont = false;
-        for (User pessoa : pessoas) {
-            if (pessoa.getEmail().equals(email)) {
-                System.out.println("Id: " + pessoa.getId());
-                System.out.println("Nome: " + pessoa.getNome());
-                System.out.println("Idade: " + pessoa.getIdade());
-                System.out.println("Email: " + pessoa.getEmail());
-                System.out.println("Formação Académica: " + Arrays.toString(pessoa.getFA()));
-                System.out.println("Cargos Profissionais: " + Arrays.toString(pessoa.getCP()));
-                System.out.println("Skills: " + Arrays.toString(pessoa.getSkills()));
-                System.out.println("Contactos: " + Arrays.toString(pessoa.getContactos()));
-                System.out.println("Menções: " + Arrays.toString(pessoa.getMencoes()));
-                System.out.println("Visualizações: " + pessoa.getVisualizacoes());
-                cont = true;
-            }
-        }
-        if (!cont) {
-            System.err.println("Email inexistente");
-        }
-    }
-
     public void LoadVertex(User[] pessoas) {
         for (User pessoa : pessoas) { //adiciona os vértices
             this.addVertex((T) pessoa);
@@ -226,6 +204,46 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         this.addEdge(vertex3, vertex4, weight);
     }
 
+    public void LoadProfile(User[] pessoas, String email) {
+        boolean cont = false;
+        for (User pessoa : pessoas) {
+            if (pessoa.getEmail().equals(email)) {
+                System.out.println("Id: " + pessoa.getId());
+                System.out.println("Nome: " + pessoa.getNome());
+                System.out.println("Idade: " + pessoa.getIdade());
+                System.out.println("Email: " + pessoa.getEmail());
+                System.out.println("Formação Académica: " + Arrays.deepToString(pessoa.getFA()));
+                for(int i = 0; i < pessoa.getFA().length; i++){
+                System.out.println("Formação Académica: " + pessoa.getFA());
+                }
+                System.out.println("Cargos Profissionais: " + Arrays.toString(pessoa.getCP()));
+                System.out.println("Skills: " + Arrays.toString(pessoa.getSkills()));
+                System.out.println("Contactos: " + Arrays.toString(pessoa.getContactos()));
+                System.out.println("Menções: " + Arrays.toString(pessoa.getMencoes()));
+                System.out.println("Visualizações: " + pessoa.getVisualizacoes());
+                cont = true;
+            }
+        }
+        if (!cont) {
+            System.err.println("Email inexistente");
+        }
+    }
+
+    public void editContacts(User user) {
+        Scanner scanner = new Scanner(System.in);
+        int valor;
+        int[] novosContactos;
+        System.out.println("Actual Contactos: " + Arrays.toString(user.getContactos()));
+        System.out.println("Insira o número de contactos que deseja inserir: ");
+        valor = scanner.nextInt();
+        novosContactos = new int[valor];
+        for (int i = 0; i < valor; i++) {
+            System.out.println("Insira o contacto no campo " + i);
+            novosContactos[i] = scanner.nextInt();
+        }
+        user.setContactos(novosContactos);
+    }
+
     public void editViews(User user) {
         Scanner scanner = new Scanner(System.in);
         int valor;
@@ -251,11 +269,11 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                     if (adjMatrix[i][j] == true) {
                         for (int k = 0; k < user[j].getSkills().length; k++) {
                             if (user[j].getSkills()[k].equals(skill)) {
-//                                for (int l = 0; l < user[j].getCP().length; l++) {
-//                                    if (user[j].getFA()[l].equals(empresa)) {
-                                        System.out.println("Utilizador encontrado: " + user[j]);
-//                                    }
-//                                }
+                                for (int l = 0; l < user[j].getCP().length; l++) {
+                                    if (user[j].getCP()[l].equals(empresa)) {
+                                System.out.println("Utilizador encontrado: " + user[j]);
+                                    }
+                                }
                             }
 
                         }
