@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Users;
-
 /**
+ * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
- * @author gls
+ * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
 import java.io.FileNotFoundException;
 import java.util.Iterator;
