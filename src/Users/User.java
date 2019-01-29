@@ -5,7 +5,6 @@ package Users;
  *
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
-
 public class User {
 
     private int id;
@@ -90,8 +89,6 @@ public class User {
         this.cp = cp;
     }
 
-    
-
     public int getVisualizacoes() {
         return visualizacoes;
     }
@@ -104,16 +101,37 @@ public class User {
 
 class formacaoAcademica {
 
+    private int ano;
+    private String formacao;
+
     public formacaoAcademica(int ano, String formacao) {
         this.ano = ano;
         this.formacao = formacao;
     }
 
-    private int ano;
-    private String formacao;
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public String getFormacao() {
+        return formacao;
+    }
+
+    public void setFormacao(String formacao) {
+        this.formacao = formacao;
+    }
+
+    
 }
 
 class cargosProfissionais {
+
+    private int ano;
+    private String cargo, empresa;
 
     public cargosProfissionais(int ano, String cargo, String empresa) {
         this.ano = ano;
@@ -121,6 +139,28 @@ class cargosProfissionais {
         this.empresa = empresa;
     }
 
-    private int ano;
-    private String cargo, empresa;
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
+
 }

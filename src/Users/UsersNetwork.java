@@ -8,6 +8,8 @@ import LinkedBinaryTree.ArrayUnorderedList;
 import LinkedBinaryTree.Graph;
 import LinkedBinaryTree.LinkedQueue;
 import LinkedBinaryTree.LinkedStack;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -224,41 +226,72 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     public Iterator iteratorShortestPath(Object startVertex, Object targetVertex) {
         try {
             return iteratorShortestPath(getIndex((T) startVertex), getIndex((T) targetVertex));
-        } catch (EmptyCollectionException ex) {
+        } catch (ListEmptyException ex) {
             Logger.getLogger(UsersNetwork.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    private Iterator iteratorShortestPath(int startVertex, int targetVertex) throws EmptyCollectionException { //FALTA FAZER
-
-        Integer x, i = startVertex, j, ponto;
+    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
+        int i = 0, j = 0;
+        //Guarda os vértices pertencentes ao menor caminho encontrado
+        ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
+        //Guarda os vértices que ainda não foram visitados
+        ArrayUnorderedList<T> naoVisitados = new ArrayUnorderedList<>();
+        //Guarda as distâncias
+        double distancia[] = new double[numVertices];
+        // Variavel que recebe os vertices pertencentes ao menor caminho
+        int verticeCaminho = startVertex;
+        // Variavel que guarda o vertice que esta a ser visitado
+        int actual;
+        // Variavel que marca o vizinho do vertice atualmente visitado
+        int vizinho;
         double menor = 9999;
-        boolean found;
 
-        LinkedStack<Integer> verticeStack = new LinkedStack<>(); // Vértices visitados
-        ArrayUnorderedList<Double> valueList = new ArrayUnorderedList<>(); // Valores dos vértices 
-        verticeStack.push(startVertex);
-        valueList.addToRear(NetworkMatrix[startVertex][startVertex]);
-                
-        while (verticeStack.peek()!= targetVertex){
-            for (j = 0; (j < numVertices); j++) {
-                if (NetworkMatrix[i][j] != 0 && NetworkMatrix[i][j] < menor) {
-                    menor = NetworkMatrix[i][j]; // actualiza o menor
-                    //ponto = j;
+        //Iguala todos os elementos de distânica a 0
+        for (i = 0; i < numVertices; i++) {
+            distancia[i] = 0;
+        }
+
+        //Adiciona todos os elementos à lista dos não visitados
+        for (i = 0; i < vertices.length; i++) {
+            naoVisitados.addToRear(vertices[i]);
+        }
+
+        naoVisitados.remove(vertices[startVertex]);
+
+        //Enquanto todos os vértices não tiverem sido visitados...
+        while (naoVisitados.contains(vertices[targetVertex])) {
+//        int a = 0;
+//        while (a < 3) {
+            actual = verticeCaminho;
+
+            for (i = 0; i < numVertices; i++) {
+                if (NetworkMatrix[actual][i] != 0 && naoVisitados.contains(vertices[i])) {
+                    vizinho = getIndex(vertices[i]);
+                    if (NetworkMatrix[actual][i] < menor) {
+                        menor = NetworkMatrix[actual][i];
+                        verticeCaminho = vizinho;
+                    }
+
                 }
             }
-            if (menor == 0) {
-                
-            }
-            
-            valueList.addToRear(menor);
-            verticeStack.push(getIndex(vertices[j]));
+            menorCaminho.addToRear(menor);
+            distancia[verticeCaminho] += menor;
             menor = 9999;
-            i = j;
-        }
-        return valueList.iterator();
+            naoVisitados.remove(vertices[verticeCaminho]);
+            //System.out.println(naoVisitados.remove(vertices[verticeCaminho]));
+//            a++;
+            System.out.println("Vértice actual:" + actual);
 
+        }
+        System.out.println("Vértice actual:" + targetVertex);
+        double num = 0;
+        for (i = 0; i < numVertices; i++) {
+            num += distancia[i];
+        }
+        System.out.println("Soma: " + num);
+        return menorCaminho.iterator();
     }
 
     @Override
@@ -274,6 +307,19 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     @Override
     public int size() {
         return numVertices;
+    }
+    
+    public boolean IsNetworkComplete() {
+        int count = 0;
+        for (int i = 0; i < this.numVertices; i++) {
+            for (int j = 0; j < this.numVertices; j++) {
+                if (adjMatrix[i][j] == true) {
+                    count++;
+                }
+            }
+        }
+        return count == (this.numVertices * this.numVertices);
+
     }
 
     protected void expandCapacity() {
@@ -319,6 +365,55 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         }
 
         return null;
+    }
+    
+    public String NetworkTable() {
+        BigDecimal bd;
+        String toReturn = "\nMatriz de Adjacência Network:\n\n";
+        toReturn += " \t";
+        for (int x = 0; x < NetworkMatrix.length; x++) {
+            toReturn += "  " + x + "   |  ";
+        }
+        toReturn += "\n\n";
+        for (int i = 0; i < NetworkMatrix.length; i++) {
+
+            toReturn += "" + i + "\t";
+            for (int j = 0; j < NetworkMatrix.length; j++) {
+                bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
+                toReturn += bd + " |  ";
+
+            }
+            toReturn += "\n";
+
+        }
+
+        return toReturn;
+    }
+
+    public String GraphTable() {
+
+        String toReturn = "\nMatriz de Adjacência:\n\n";
+        toReturn += " \t";
+        for (int x = 0; x < this.numVertices; x++) {
+            toReturn += x + " ";
+        }
+        toReturn += "\n\n";
+        for (int i = 0; i < this.numVertices; i++) {
+
+            toReturn += "" + i + "\t";
+            for (int j = 0; j < this.numVertices; j++) {
+
+                if (adjMatrix[i][j] == true) {
+                    toReturn += "1 ";
+                } else {
+                    toReturn += "0 ";
+                }
+            }
+            toReturn += "\n";
+
+        }
+        return toReturn;
+
     }
 
 }

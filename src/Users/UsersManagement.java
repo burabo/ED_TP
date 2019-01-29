@@ -3,8 +3,6 @@ package Users;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -20,6 +18,9 @@ import org.json.simple.parser.ParseException;
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
 public class UsersManagement<T> extends UsersNetwork<T> {
+
+    Scanner scanner = new Scanner(System.in);
+    User user;
 
     public static User[] UserReader(String name) throws FileNotFoundException {
         JSONParser parser = new JSONParser();
@@ -129,108 +130,22 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public String NetworkTable() {
-        BigDecimal bd;
-        String toReturn = "\nMatriz de Adjacência Network:\n\n";
-        toReturn += " \t";
-        for (int x = 0; x < NetworkMatrix.length; x++) {
-            toReturn += "  " + x + "   |  ";
-        }
-        toReturn += "\n\n";
-        for (int i = 0; i < NetworkMatrix.length; i++) {
-
-            toReturn += "" + i + "\t";
-            for (int j = 0; j < NetworkMatrix.length; j++) {
-                bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
-                toReturn += bd + " |  ";
-
-            }
-            toReturn += "\n";
-
-        }
-
-        return toReturn;
+    public void LoadProfile(User[] users) {
+        user = searchEmail(users);
+        System.out.println("Id: " + user.getId());
+        System.out.println("Nome: " + user.getNome());
+        System.out.println("Idade: " + user.getIdade());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Formação Académica: " + user.getFA().toString());
+        System.out.println("Cargos Profissionais: " + user.getCP().toString());
+        System.out.println("Skills: " + Arrays.toString(user.getSkills()));
+        System.out.println("Contactos: " + Arrays.toString(user.getContactos()));
+        System.out.println("Menções: " + Arrays.toString(user.getMencoes()));
+        System.out.println("Visualizações: " + user.getVisualizacoes());
     }
 
-    public String GraphTable() {
-
-        String toReturn = "\nMatriz de Adjacência:\n\n";
-        toReturn += " \t";
-        for (int x = 0; x < this.numVertices; x++) {
-            toReturn += x + " ";
-        }
-        toReturn += "\n\n";
-        for (int i = 0; i < this.numVertices; i++) {
-
-            toReturn += "" + i + "\t";
-            for (int j = 0; j < this.numVertices; j++) {
-
-                if (adjMatrix[i][j] == true) {
-                    toReturn += "1 ";
-                } else {
-                    toReturn += "0 ";
-                }
-            }
-            toReturn += "\n";
-
-        }
-        return toReturn;
-
-    }
-
-    public String IsNetworkComplete() {
-        int count = 0;
-        for (int i = 0; i < this.numVertices; i++) {
-            for (int j = 0; j < this.numVertices; j++) {
-                if (adjMatrix[i][j] == true) {
-                    count++;
-                }
-            }
-        }
-        if (count == (this.numVertices * this.numVertices)) {
-            return "Matriz de Adjacência completa";
-        } else {
-            return "Matriz de Adjacência Incompleta";
-        }
-
-    }
-
-//    public void EditEdge(Object vertex1, Object vertex2, Object vertex3, Object vertex4) {
-//        this.removeEdge(vertex1, vertex2);
-//        this.addEdge(vertex3, vertex4);
-//    }
-    public void EditEdge(Object vertex1, Object vertex2, Object vertex3, Object vertex4, double weight) {
-        this.removeEdge(vertex1, vertex2);
-        this.addEdge(vertex3, vertex4, weight);
-    }
-
-    public void LoadProfile(User[] pessoas, String email) {
-        boolean cont = false;
-        for (User pessoa : pessoas) {
-            if (pessoa.getEmail().equals(email)) {
-                System.out.println("Id: " + pessoa.getId());
-                System.out.println("Nome: " + pessoa.getNome());
-                System.out.println("Idade: " + pessoa.getIdade());
-                System.out.println("Email: " + pessoa.getEmail());
-                System.out.println("Formação Académica: " + Arrays.deepToString(pessoa.getFA()));
-                for(int i = 0; i < pessoa.getFA().length; i++){
-                System.out.println("Formação Académica: " + pessoa.getFA());
-                }
-                System.out.println("Cargos Profissionais: " + Arrays.toString(pessoa.getCP()));
-                System.out.println("Skills: " + Arrays.toString(pessoa.getSkills()));
-                System.out.println("Contactos: " + Arrays.toString(pessoa.getContactos()));
-                System.out.println("Menções: " + Arrays.toString(pessoa.getMencoes()));
-                System.out.println("Visualizações: " + pessoa.getVisualizacoes());
-                cont = true;
-            }
-        }
-        if (!cont) {
-            System.err.println("Email inexistente");
-        }
-    }
-
-    public void editContacts(User user) {
-        Scanner scanner = new Scanner(System.in);
+    public void editContacts(User[] users) {
+        user = searchEmail(users);
         int valor;
         int[] novosContactos;
         System.out.println("Actual Contactos: " + Arrays.toString(user.getContactos()));
@@ -244,8 +159,8 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         user.setContactos(novosContactos);
     }
 
-    public void editViews(User user) {
-        Scanner scanner = new Scanner(System.in);
+    public void editViews(User[] users) {
+        user = searchEmail(users);
         int valor;
         System.out.println("Actual Visualizações: " + user.getVisualizacoes());
         System.out.println("Insira o novo valor do campo Visualizações: ");
@@ -255,7 +170,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
     }
 
     public void findUsers(User[] user) {
-        Scanner scanner = new Scanner(System.in);
         String skill, empresa, email;
         System.out.println("Introduza o email do utilizador: ");
         email = scanner.next();
@@ -270,8 +184,8 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                         for (int k = 0; k < user[j].getSkills().length; k++) {
                             if (user[j].getSkills()[k].equals(skill)) {
                                 for (int l = 0; l < user[j].getCP().length; l++) {
-                                    if (user[j].getCP()[l].equals(empresa)) {
-                                System.out.println("Utilizador encontrado: " + user[j]);
+                                    if (user[j].cp[l].getEmpresa().equals(empresa)) {
+                                        System.out.println("Utilizador encontrado: " + user[j]);
                                     }
                                 }
                             }
@@ -283,5 +197,17 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             }
 
         }
+    }
+
+    public User searchEmail(User[] users) {
+        String email;
+        System.out.println("Introduza o email do utilizador: ");
+        email = scanner.next();
+        for (int i = 0; i < users.length; i++) {
+            if (users[i].getEmail().equals(email)) {
+                return users[i];
+            }
+        }
+        return null;
     }
 }

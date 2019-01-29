@@ -1,0 +1,626 @@
+{
+	"grafoSocial": [{
+			"id": 0,
+			"nome": "teste1",
+			"idade": 20,
+			"email": "teste1@teste.pt",
+			"formacaoAcademica": [{
+					"ano": 2000,
+					"formacao": "LEI"
+				},
+				{
+					"ano": 1998,
+					"formacao": "12"
+				}
+			],
+			"cargosProfissionais": [{
+					"ano": 2001,
+					"cargo": "Desenvolvedor",
+					"empresa": "X"
+				},
+				{
+					"ano": 2000,
+					"cargo": "Estagi?rio",
+					"empresa": "A"
+				}
+			],
+			"skills": [
+				"Java",
+				"C",
+				"Nebeans"
+			],
+			"contacts": [{
+					"userid": 1
+				},
+				{
+					"userid": 2
+				}
+			],
+			"mencoes": [{
+					"userid": 3
+				},
+				{
+					"userid": 4
+				}
+			],
+			"visualizacoes": 500
+		},
+		{
+			"id": 1,
+			"nome": "teste2",
+			"idade": 20,
+			"email": "teste2@teste.pt",
+			"formacaoAcademica": [{
+					"ano": 2010,
+					"formacao": "LSIG"
+				},
+				{
+					"ano": 1995,
+					"formacao": "12"
+				}
+			],
+			"cargosProfissionais": [{
+					"ano": 2011,
+					"cargo": "Administrador de base de dados",
+					"empresa": "A"
+				},
+				{
+					"ano": 2010,
+					"cargo": "Estagi?rio",
+					"empresa": "Z"
+				}
+			],
+			"skills": [
+				"Prolog",
+				"C#",
+				"Visual Studio"
+			],
+			"contacts": [{
+					"userid": 0
+				},
+				{
+					"userid": 3
+				},
+				{
+					"userid": 4
+				}
+			],
+			"mencoes": [{
+					"userid": 3
+				},
+				{
+					"userid": 4
+				}
+			],
+			"visualizacoes": 12
+		},
+		{
+			"id": 2,
+			"nome": "teste3",
+			"idade": 40,
+			"email": "teste3@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 1995,
+				"formacao": "12"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2011,
+					"cargo": "Adminstrativo",
+					"empresa": "X"
+				},
+				{
+					"ano": 2010,
+					"cargo": "Estagi?rio",
+					"empresa": "X"
+				}
+			],
+			"skills": [
+				"Prolog",
+				"C#",
+				"Visual Studio"
+			],
+			"contacts": [{
+				"userid": 0
+			}],
+			"mencoes": [{
+				"userid": 0
+			}],
+			"visualizacoes": 150
+		},
+		{
+			"id": 3,
+			"nome": "teste4",
+			"idade": 32,
+			"email": "teste4@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2011,
+				"formacao": "MEI"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2011,
+					"cargo": "Administrador de base de dados",
+					"empresa": "Z"
+				},
+				{
+					"ano": 2011,
+					"cargo": "Developer",
+					"empresa": "A"
+				}
+			],
+			"skills": [
+				"C++",
+				"Angular",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 1
+				},
+				{
+					"userid": 4
+				}
+			],
+			"mencoes": [{
+					"userid": 1
+				},
+				{
+					"userid": 2
+				}
+			],
+			"visualizacoes": 12
+		},
+		{
+			"id": 4,
+			"nome": "teste5",
+			"idade": 60,
+			"email": "teste5@teste.pt",
+			"formacaoAcademica": [{
+					"ano": 2015,
+					"formacao": "LEI"
+				},
+				{
+					"ano": 2012,
+					"formacao": "12"
+				}
+			],
+			"cargosProfissionais": [{
+					"ano": 2011,
+					"cargo": "Administrador de base de dados",
+					"empresa": "Z"
+				},
+				{
+					"ano": 2010,
+					"cargo": "Estagi?rio",
+					"empresa": "X"
+				}
+			],
+			"skills": [
+				"Python",
+				"Typescript",
+				"Kotlin"
+			],
+			"contacts": [{
+					"userid": 1
+				},
+				{
+					"userid": 3
+				}
+			],
+			"mencoes": [],
+			"visualizacoes": 300
+		},
+        {
+			"id": 5,
+			"nome": "teste5",
+			"idade": 32,
+			"email": "teste5@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2014,
+				"formacao": "LEI"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2011,
+					"cargo": "Administrador de redes",
+					"empresa": "Fnac"
+				},
+				{
+					"ano": 2013,
+					"cargo": "Developer",
+					"empresa": "A"
+				}
+			],
+			"skills": [
+				"C++",
+				"Angular",
+                "Java",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 1
+				},
+				{
+					"userid": 4
+				}
+			],
+			"mencoes": [{
+					"userid": 1
+				},
+				{
+					"userid": 2
+				}
+			],
+			"visualizacoes": 2
+		},
+        {
+			"id": 6,
+			"nome": "teste6",
+			"idade": 62,
+			"email": "teste6@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 1976,
+				"formacao": "LSIRC"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1992,
+					"cargo": "Administrador de redes",
+					"empresa": "MediaMarkt"
+				},
+				{
+					"ano": 2005,
+					"cargo": "Developer",
+					"empresa": "Leave"
+				}
+			],
+			"skills": [
+				"C++",
+				"Angular",
+                "Python",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 5
+				},
+				{
+					"userid": 2
+				}
+			],
+			"mencoes": [{
+					"userid": 3
+				},
+				{
+					"userid": 4
+				}
+			],
+			"visualizacoes": 511
+		},
+        {
+			"id": 7,
+			"nome": "teste7",
+			"idade": 51,
+			"email": "teste7@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 1976,
+				"formacao": "Redes"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1999,
+					"cargo": "Administrador de redes",
+					"empresa": "PCDIGA"
+				},
+				{
+					"ano": 2009,
+					"cargo": "Web Developer",
+					"empresa": "PCDIGA"
+				}
+			],
+			"skills": [
+				"C++",
+				"Php",
+                "HTML",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 5
+				},
+				{
+					"userid": 6
+				}
+			],
+			"mencoes": [{
+					"userid": 1
+				},
+				{
+					"userid": 3
+				}
+			],
+			"visualizacoes": 121
+		},
+        {
+			"id": 8,
+			"nome": "teste8",
+			"idade": 54,
+			"email": "teste8@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 1976,
+				"formacao": "Programador"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1999,
+					"cargo": "Programador Web",
+					"empresa": "Fnac"
+				},
+				{
+					"ano": 2011,
+					"cargo": "Program Developer",
+					"empresa": "Fnac"
+				}
+			],
+			"skills": [
+				"C++",
+				"C",
+                "Java",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 7
+				},
+				{
+					"userid": 6
+				}
+			],
+			"mencoes": [{
+					"userid": 2
+				},
+				{
+					"userid": 5
+				}
+			],
+			"visualizacoes": 1
+		},
+        {
+			"id": 9,
+			"nome": "teste9",
+			"idade": 19,
+			"email": "teste9@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2018,
+				"formacao": "Programador"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2019,
+					"cargo": "Programador Web",
+					"empresa": "Globaldata"
+		    }],
+			"skills": [
+				"HTML",
+				"C",
+                "Java",
+				"Javascript"
+			],
+			"contacts": [{
+					"userid": 7
+				},
+				{
+					"userid": 8
+				}
+			],
+			"mencoes": [{
+					"userid": 8
+				},
+				{
+					"userid": 5
+				}
+			],
+			"visualizacoes": 19
+		},
+        {
+			"id": 10,
+			"nome": "teste10",
+			"idade": 25,
+			"email": "teste10@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2014,
+				"formacao": "Segurança de Redes"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2015,
+					"cargo": "Administrador de Redes",
+					"empresa": "Cisco"
+		    }],
+			"skills": [
+				"HTML",
+				"C",
+                "Java",
+				"Python"
+			],
+			"contacts": [{
+					"userid": 7
+				},
+				{
+					"userid": 8
+				}
+			],
+			"mencoes": [{
+					"userid": 8
+				},
+				{
+					"userid": 9
+				}
+			],
+			"visualizacoes": 112
+		},
+        {
+			"id": 11,
+			"nome": "teste11",
+			"idade": 31,
+			"email": "teste11@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2004,
+				"formacao": "Hacking Ético"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2009,
+					"cargo": "Responsável Segurança de Redes",
+					"empresa": "Cisco"
+		    }],
+			"skills": [
+				"HTML",
+				"C",
+                "Java",
+				"Python"
+			],
+			"contacts": [{
+					"userid": 7
+				},
+				{
+					"userid": 8
+				}
+			],
+			"mencoes": [{
+					"userid": 10
+				},
+				{
+					"userid": 9
+				}
+			],
+			"visualizacoes": 67
+		},
+        {
+			"id": 11,
+			"nome": "teste11",
+			"idade": 31,
+			"email": "teste11@teste.pt",
+			"formacaoAcademica": [{
+				"ano": 2004,
+				"formacao": "Hacking Ético"
+			}],
+			"cargosProfissionais": [{
+					"ano": 2009,
+					"cargo": "Responsável Segurança de Redes",
+					"empresa": "Novo Atalho"
+		    }],
+			"skills": [
+				"HTML",
+				"C",
+                "Java",
+				"Python"
+			],
+			"contacts": [{
+					"userid": 1
+				},
+				{
+					"userid": 2
+				}
+			],
+			"mencoes": [{
+					"userid": 2
+				},
+				{
+					"userid": 9
+				}
+			],
+			"visualizacoes": 999
+		},
+        {
+			"id": 12,
+			"nome": "teste12",
+			"idade": 43,
+			"email": "teste12@teste.pt",
+			"formacaoAcademica": [{
+				"ano":1989,
+				"formacao": "Economia"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1990,
+					"cargo": "Contabilista",
+					"empresa": "Cisco"
+		    }],
+			"skills": [
+				"HTML",
+				"C",
+                "Java",
+				"Python"
+			],
+			"contacts": [{
+					"userid": 9
+				},
+				{
+					"userid": 11
+				}
+			],
+			"mencoes": [{
+					"userid": 10
+				},
+				{
+					"userid": 11
+				}
+			],
+			"visualizacoes": 23
+		},
+        {
+			"id": 13,
+			"nome": "teste13",
+			"idade": 64,
+			"email": "teste13@teste.pt",
+			"formacaoAcademica": [{
+				"ano":1979,
+				"formacao": "Direito"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1989,
+					"cargo": "Advogado",
+					"empresa": "Conta Propria"
+		    }],
+			"skills": [
+				"código penal",
+				"divórcios"	],
+			"contacts": [{
+					"userid": 12
+				},
+				{
+					"userid": 7
+				}
+			],
+			"mencoes": [{
+					"userid": 11
+				},
+				{
+					"userid": 3
+				}
+			],
+			"visualizacoes": 224
+		},
+        {
+			"id": 14,
+			"nome": "teste14",
+			"idade": 40,
+			"email": "teste14@teste.pt",
+			"formacaoAcademica": [{
+				"ano":1989,
+				"formacao": "Contabilidade"
+			}],
+			"cargosProfissionais": [{
+					"ano": 1989,
+					"cargo": "Contabilista",
+					"empresa": "Conta Propria"
+		    }],
+			"skills": [
+				"IRS",
+				"IRC"	],
+			"contacts": [{
+					"userid": 12
+				},
+				{
+					"userid": 13
+				}
+			],
+			"mencoes": [{
+					"userid": 13
+				},
+				{
+					"userid": 3
+				}
+			],
+			"visualizacoes": 1
+		}
+	]
+}

@@ -27,11 +27,19 @@ public class Menu {
     }
 
     public Menu(User[] user, UsersManagement g1) {
+
+        User newUser;
         int option;
         String email;
         String options[] = {"Consultar informação relativa a um utilizador",
             "Editar ligações", "Editar visualizações", "É completo?", "É conexo?",
+            "Descobrir o caminho mais curto entre 2 utilizadores",
             "Utilizadores alcançáveis a partir de um utilizador",
+            "Utilizadores não alcançáveis a partir de um utilizador (Falta)",
+            "Verificar a partir de um dado utilizador qual a lista de utilizadoresque fazem parte dos contactos da lista que têm determinada skill e trabalham em determinada empresa",
+            "Lista de utilizadores de uma empresa passada como parâmetro que estão relacionados com um utilizador também passado como parâmetro(Falta)",
+            "Verificar que os utilizadores que ocupam um cargo numa empresa não estão relacionados com utilizadores de outras empresas(Falta)",
+            "Lista de utilizadores que contém um determinado skill no seu perfil ordenado pelo menor custo de ligação(Falta)",
             "Matriz de Adjacência", "Matriz de Adjacência Network"};
 
         do {
@@ -42,27 +50,22 @@ public class Menu {
                 System.out.println("Introduza a opção pretendida: ");
                 option = scanner.nextInt();
             } while (option < 1 && option > 20);
+
             switch (option) {
+
                 //Consultar informação relativa a um utilizador
                 case 1:
-                    System.out.println("Introduza o email do utilizador: ");
-                    email = scanner.next();
-                    g1.LoadProfile(user, email);
+                    g1.LoadProfile(user);
                     break;
+
                 //Editar ligações
                 case 2:
-                    g1.EditEdge(user[0], user[1], user[2], user[3], 2);
-                    System.out.println("Ligação editada");
+                    g1.editContacts(user);
                     break;
                 //Editar visualizações
+
                 case 3:
-                    System.out.println("Introduza o email do utilizador: ");
-                    email = scanner.next();
-                    for (User user1 : user) {
-                        if (user1.getEmail().equals(email)) {
-                            g1.editViews(user1);
-                        }
-                    }
+                    g1.editViews(user);
                     break;
 
                 //É completo?
@@ -75,48 +78,55 @@ public class Menu {
                     System.out.println("\nIs connected? " + g1.isConnected());
                     break;
 
-                //Utilizadores alcançáveis a partir de um utilizador
+                //Descobrir o caminho mais curto entre 2 utilizadores
                 case 6:
-                    System.out.println("Introduza o email do utilizador: ");
-                    email = scanner.next();
-                    for (User user1 : user) {
-                        if (user1.getEmail().equals(email)) {
-                            System.out.println("\nIterator BFS\n");
-                            Iterator bfs = g1.iteratorBFS(user1);
-                            while (bfs.hasNext()) {
-                                System.out.println(bfs.next());
-                            }
-                            System.out.println("\nIterator DFS\n");
-                            Iterator dfs = g1.iteratorDFS(user1);
-                            while (dfs.hasNext()) {
-                                System.out.println(dfs.next());
-                            }
-                        }
+                    System.out.println("\nCusto de cada caminho: \n");
+                    Iterator sp = g1.iteratorShortestPath(user[11], user[1]);
+                    while (sp.hasNext()) {
+                        System.out.println(sp.next());
+                    }
+                    break;
+
+                //Utilizadores alcançáveis a partir de um utilizador
+                case 7:
+                    newUser = g1.searchEmail(user);
+                    System.out.println("\nIterator BFS\n");
+                    Iterator bfs = g1.iteratorBFS(newUser);
+                    while (bfs.hasNext()) {
+                        System.out.println(bfs.next());
+                    }
+                    System.out.println("\nIterator DFS\n");
+                    Iterator dfs = g1.iteratorDFS(newUser);
+                    while (dfs.hasNext()) {
+                        System.out.println(dfs.next());
                     }
                     break;
 
                 //Utilizadores não alcançáveis a partir de um utilizador 
-                case 7:
-                    break;
-                //Verificar a partir de um dado utilizador qual a lista...
                 case 8:
+                    break;
+
+                //Verificar a partir de um dado utilizador qual a lista de utilizadores que fazem parte dos contactos
+                //da lista que têm determinada skill e trabalham em determinada empresa
+                case 9:
                     g1.findUsers(user);
                     break;
+
                 //Apresentar uma lista de utilizadores de uma empresa passada...
-                case 9:
-                    break;
-                //Verificar que os utilizadores que ocupam um cargo numa empresa....
                 case 10:
                     break;
-                //Apresentar uma lista de utilizadores que contém um determinado skill...
+                //Verificar que os utilizadores que ocupam um cargo numa empresa....
                 case 11:
                     break;
-                //Matriz de Adjacência    
+                //Apresentar uma lista de utilizadores que contém um determinado skill...
                 case 12:
+                    break;
+                //Matriz de Adjacência    
+                case 13:
                     System.out.println(g1.GraphTable());
                     break;
                 //Matriz de Adjacênica Network
-                case 13:
+                case 14:
                     System.out.println(g1.NetworkTable());
                     break;
             }
