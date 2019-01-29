@@ -84,7 +84,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     }
 
     @Override
-    public double shortestPathWeight(Object vertex1, Object vertex2) { //FALTA FAZER
+    public double shortestPathWeight(Object vertex1, Object vertex2) { // Já feito noutro método
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
