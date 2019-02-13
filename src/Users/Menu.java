@@ -28,7 +28,7 @@ public class Menu {
         int option;
         String email, empresa, empresa2, skill;
         String options[] = {"Consultar informação relativa a um utilizador",
-            "Editar ligações", "Editar visualizações", "É completo?", "É conexo?",
+            "Editar menções", "Editar visualizações", "O grafo é completo?", "O grafo é conexo?",
             "Descobrir o caminho mais curto entre 2 utilizadores",
             "Utilizadores alcançáveis a partir de um utilizador",
             "Utilizadores não alcançáveis a partir de um utilizador",
