@@ -262,7 +262,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
-            
+
             actual = verticeCaminho;
 
             for (i = 0; i < numVertices; i++) {
@@ -297,16 +297,41 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         return numVertices == 0;
     }
 
+    
+
     @Override
     public boolean isConnected() {
-        return count == numVertices;
+        int visited[] = new int[adjMatrix.length];
+
+        for (int row = 0; row < adjMatrix.length; row++) {
+            for (int col = 0; col < adjMatrix.length; col++) {
+
+                if (adjMatrix[row][col] == true && visited[row] == 0) {
+                    visited[row] = 1;
+                }
+
+            }
+        }
+
+        boolean connected = false;
+
+        for (int vertex = 0; vertex < adjMatrix.length; vertex++) {
+            if (visited[vertex] == 1) {
+                connected = true;
+            } else {
+                connected = false;
+                break;
+            }
+        }
+
+        return connected;
     }
 
     @Override
     public int size() {
         return numVertices;
     }
-    
+
     public boolean IsNetworkComplete() {
         int count = 0;
         for (int i = 0; i < this.numVertices; i++) {
@@ -364,7 +389,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
         return null;
     }
-    
+
     public String NetworkTable() {
         BigDecimal bd;
         String toReturn = "\nMatriz de Adjacência Network:\n\n";
@@ -379,6 +404,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
             for (int j = 0; j < NetworkMatrix.length; j++) {
                 bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
                 toReturn += bd + " |  ";
+                
 
             }
             toReturn += "\n";

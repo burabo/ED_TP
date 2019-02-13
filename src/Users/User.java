@@ -112,6 +112,19 @@ public class User {
                 + "\n\t|Menções: " + Arrays.toString(mencoes)
                 + "\n\t|Visualizações: " + visualizacoes;
     }
+
+    public String toStringJSON() {
+        return "{id: " + id
+                + ",nome: " + nome
+                + ",idade: " + idade
+                + ",email: " + email
+                + ",formacaoAcademica: " + Arrays.toString(fa)
+                + ",cargosProfissionais: " + Arrays.toString(cp)
+                + ",skills: " + Arrays.toString(skills)
+                + ",contacts: " + Arrays.toString(contactos)
+                + ",mencoes: " + Arrays.toString(mencoes)
+                + ",visualizacoes: " + visualizacoes + "}";
+    }
 }
 
 class formacaoAcademica {
@@ -144,6 +157,8 @@ class formacaoAcademica {
     public String toString() {
         return "Ano: " + ano + ", Formação: " + formacao;
     }
+    
+   
 }
 
 class cargosProfissionais {

@@ -1,12 +1,12 @@
 package Users;
 
-import LinkedBinaryTree.ArrayOrderedList;
 import LinkedBinaryTree.ArrayUnorderedList;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,11 +119,11 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 User user2 = (User) vetor_vertices[v];
                 if (c < v) {
                     if (user1 != null) {
-                        for (int k : user1.getContactos()) {
+                        for (int k : user1.getMencoes()) {
                             if (user2 != null) {
                                 if (k == user2.getId()) {
-                                    this.addEdge(user1, user2, ((double) 1 / (double) user1.getVisualizacoes()));
-                                    this.addEdge(user2, user1, ((double) 1 / (double) user2.getVisualizacoes()));
+                                    this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
+                                    this.addEdge(user2, user1, ((double) 1 / (double) user2.getMencoes().length));
                                 }
                             }
                         }
@@ -147,29 +147,95 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         System.out.println("Visualizações: " + user.getVisualizacoes());
     }
 
-    public void editContacts(User[] users) {
+    public void editMencoes(User[] users) throws IOException {
         user = searchEmail(users);
-        int valor;
-        int[] novosContactos;
-        System.out.println("Actual Contactos: " + Arrays.toString(user.getContactos()));
-        System.out.println("Insira o número de contactos que deseja inserir: ");
-        valor = scanner.nextInt();
-        novosContactos = new int[valor];
-        for (int i = 0; i < valor; i++) {
-            System.out.println("Insira o contacto no campo " + i);
-            novosContactos[i] = scanner.nextInt();
+        if (user == null) {
+            System.out.println("O email não existe.");
+        } else {
+            int valor;
+            int[] novasMencoes;
+            System.out.println("Actuais Menções: " + Arrays.toString(user.getMencoes()));
+            System.out.println("Insira o número de menções que deseja inserir: ");
+            valor = scanner.nextInt();
+            novasMencoes = new int[valor];
+            for (int i = 0; i < valor; i++) {
+                System.out.println("Insira a menção no campo " + i);
+                novasMencoes[i] = scanner.nextInt();
+            }
+            user.setMencoes(novasMencoes);
+            JSONObject obj = new JSONObject();
+            JSONArray array_obj = new JSONArray();
+            for (int i = 0; i < user.getMencoes().length; i++) {
+                obj.put("Menção nº " + i + ": ", user.getMencoes()[i]);
+
+            }
+            array_obj.add(obj);
+            Files.write(Paths.get("mencoes_alteradas.txt"), array_obj.toJSONString().getBytes());
         }
-        user.setContactos(novosContactos);
     }
 
-    public void editViews(User[] users) {
+    public void editViews(User[] users) throws IOException {
         user = searchEmail(users);
-        int valor;
-        System.out.println("Actual Visualizações: " + user.getVisualizacoes());
-        System.out.println("Insira o novo valor do campo Visualizações: ");
-        valor = scanner.nextInt();
-        user.setVisualizacoes(valor);
+        if (user == null) {
+            System.out.println("O email não existe.");
+        } else {
+            int valor;
+            System.out.println("Actual Visualizações: " + user.getVisualizacoes());
+            System.out.println("Insira o novo valor do campo Visualizações: ");
+            valor = scanner.nextInt();
+            user.setVisualizacoes(valor);
+            /*JSONArray array_obj = new JSONArray();
+            for (User user1 : users) {
+                array_obj.add(user.getVisualizacoes());
+            }
+            Files.write(Paths.get("visualizacoes_alteradas.txt"), array_obj.toJSONString().getBytes());*/
 
+        }
+
+    }
+
+    public void print(User[] users) throws IOException {
+        JSONObject obj = new JSONObject();
+        JSONObject obj_geral = new JSONObject();
+        JSONObject obj_fa = new JSONObject();
+        JSONArray array_obj = new JSONArray();
+
+        for (int i = 0; i < users.length; i++) {
+            obj.put("id: ", users[i].getId());
+            obj.put("nome: ", users[i].getNome());
+            obj.put("idade: ", users[i].getIdade());
+            obj.put("email: ", users[i].getEmail());
+            System.out.println(users[i].getFA().length);
+            for (int x = 0; x < users[i].getFA().length; x++) {
+                //array_obj_1.add("ano: " + users[i].fa[x].getAno() + ", formacao: "+ users[i].fa[x].getFormacao() );
+
+                obj_fa.put("ano: ", users[i].fa[x].getAno());
+                obj_fa.put("formacao : ", users[i].fa[x].getFormacao());
+            }
+
+            /*  for(int x  = 0; x < users[i].getCP().length; x++){
+               obj.put("ano : ", users[i].cp[i].getAno()); 
+               obj.put("cargo : ", users[i].cp[i].getCargo()); 
+               obj.put("empresa : ", users[i].cp[i].getEmpresa());
+            }
+            for(int x  = 0; x < users[i].getSkills().length; x++){
+               obj.put("skills : ", users[i].getSkills()[x]); 
+            }
+            for(int x  = 0; x < users[i].getContactos().length; x++){
+               obj.put("userid : ", users[i].getContactos()[x]); 
+            }
+            for(int x  = 0; x < users[i].getMencoes().length; x++){
+               obj.put("userid : ", users[i].getMencoes()[x]); 
+            }
+             */
+            obj.put("visualizacoes: ", users[i].getVisualizacoes());
+            obj_geral.put("grafoSocial", obj);
+            obj_geral.put("formacaoAcademica ", obj_fa);
+            array_obj.add(obj_geral);
+
+        }
+
+        Files.write(Paths.get("teste.txt"), array_obj.toJSONString().getBytes());
     }
 
     public void notReachable(User[] users) {
@@ -189,32 +255,65 @@ public class UsersManagement<T> extends UsersNetwork<T> {
     }
 
     public void findUsers(User[] user) {
-        String skill, empresa, email;
+        String formacoes, email;
+        String[] skill = new String[5];
+        Scanner kb = new Scanner(System.in);
+        Scanner kb_skill = new Scanner(System.in);
+        int count = 0, escolha = 0;
         System.out.println("Introduza o email do utilizador: ");
         email = scanner.next();
         for (int i = 0; i < user.length; i++) {
             if (user[i].getEmail().equals(email)) {
-                System.out.println("Introduza a skill pretendida");
-                skill = scanner.next();
-                System.out.println("Introduza a empresa pretendida");
-                empresa = scanner.next();
-                for (int j = 0; j < adjMatrix.length; j++) {
-                    if (adjMatrix[i][j] == true) {
-                        for (int k = 0; k < user[j].getSkills().length; k++) {
-                            if (user[j].getSkills()[k].equals(skill)) {
-                                for (int l = 0; l < user[j].getCP().length; l++) {
-                                    if (user[j].cp[l].getEmpresa().equals(empresa)) {
-                                        System.out.println("Utilizador encontrado: " + user[j]);
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("O email não existe.");
+        }
+
+        for (int i = 0; i < user.length; i++) {
+            if (user[i].getEmail().equals(email)) {
+                do {
+                    System.out.print("Pretende inserir skills(1) ou formações académicas(2)? ");
+                    escolha = kb.nextInt();
+                } while (!(escolha == 1 || escolha == 2));
+                if (escolha == 1) {
+                    int num_skills = 0;
+                    do {
+                        System.out.print("Quantas skills pretende procurar? ");
+                        num_skills = kb_skill.nextInt();
+                    } while (num_skills <= 0);
+                    for (int m = 0; m < num_skills; m++) {
+                        System.out.print("Introduza a skill pretendida: ");
+                        skill[m] = scanner.next();
+                    }
+                    for (int j = 0; j < adjMatrix.length; j++) {
+                        if (adjMatrix[i][j] == true) {
+                            for (int k = 0; k < user[j].getSkills().length; k++) {
+                                for (int n = 0; n < num_skills; n++) {
+                                    if (user[j].getSkills()[k].equals(skill[n])) {
+                                        System.out.println("Utilizador encontrado! " + user[j]);
                                     }
                                 }
+
                             }
-
                         }
-
+                    }
+                } else if (escolha == 2) {
+                    System.out.print("Introduza a formação académica pretendida: ");
+                    formacoes = scanner.next();
+                    for (int j = 0; j < adjMatrix.length; j++) {
+                        if (adjMatrix[i][j] == true) {
+                            for (int l = 0; l < user[j].getFA().length; l++) {
+                                if (user[j].fa[l].getFormacao().equals(formacoes)) {
+                                    System.out.println("Utilizador encontrado! " + user[j]);
+                                }
+                            }
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 
@@ -277,6 +376,8 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         for (int i = 0; i < users.length; i++) {
             if (users[i].getEmail().equals(email)) {
                 return users[i];
+            } else {
+                return null;
             }
         }
         return null;

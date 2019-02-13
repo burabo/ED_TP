@@ -5,6 +5,7 @@ package Users;
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class Menu {
 
     Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 
         User[] user = UsersManagement.UserReader("SocialGraph.json");
         UsersManagement g1 = new UsersManagement();
@@ -21,7 +22,7 @@ public class Menu {
         Menu menu = new Menu(user, g1);
     }
 
-    public Menu(User[] user, UsersManagement g1) {
+    public Menu(User[] user, UsersManagement g1) throws IOException {
 
         User newUser;
         int option;
@@ -56,12 +57,14 @@ public class Menu {
 
                 //Editar ligações
                 case 2:
-                    g1.editContacts(user);
+                    g1.editMencoes(user);
+                    //g1.print(user);
                     break;
                 //Editar visualizações
 
                 case 3:
                     g1.editViews(user);
+                    g1.print(user);
                     break;
 
                 //É completo?
@@ -70,14 +73,14 @@ public class Menu {
                     break;
 
                 //É conexo?
-                case 5:
+                case 5: //VALIDAR SE ESTÁ CERTO OU NÃO COM GRAFO CONEXO!
                     System.out.println("\nIs connected? " + g1.isConnected());
                     break;
 
                 //Descobrir o caminho mais curto entre 2 utilizadores
                 case 6:
                     System.out.println("\nCusto de cada caminho: \n");
-                    Iterator sp = g1.iteratorShortestPath(user[4], user[0]);
+                    Iterator sp = g1.iteratorShortestPath(user[3], user[1]);
                     while (sp.hasNext()) {
                         System.out.println(sp.next());
                     }
