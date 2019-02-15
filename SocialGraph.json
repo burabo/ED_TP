@@ -1,212 +1,236 @@
 {
-	"grafoSocial": [{
-			"id": 0,
-			"nome": "teste1",
-			"idade": 20,
-			"email": "teste1@teste.pt",
-			"formacaoAcademica": [{
-					"ano": 2000,
-					"formacao": "LEI"
-				},
-				{
-					"ano": 1998,
-					"formacao": "12"
-				}
-			],
-			"cargosProfissionais": [{
-					"ano": 2001,
-					"cargo": "Desenvolvedor",
-					"empresa": "X"
-				},
-				{
-					"ano": 2000,
-					"cargo": "Estagi?rio",
-					"empresa": "A"
-				}
-			],
-			"skills": [
-				"Java",
-				"C",
-				"Nebeans"
-			],
-			"contacts": [{
-					"userid": 1
-				},
-				{
-					"userid": 2
-				}
-			],
-			"mencoes": [{
-					"userid": 3
-				},
-				{
-					"userid": 4
-				}
-			],
-			"visualizacoes": 500
-		},
-		{
-			"id": 1,
-			"nome": "teste2",
-			"idade": 20,
-			"email": "teste2@teste.pt",
-			"formacaoAcademica": [{
-					"ano": 2010,
-					"formacao": "LSIG"
-				},
-				{
-					"ano": 1995,
-					"formacao": "12"
-				}
-			],
-			"cargosProfissionais": [{
-					"ano": 2011,
-					"cargo": "Administrador de base de dados",
-					"empresa": "A"
-				},
-				{
-					"ano": 2010,
-					"cargo": "Estagi?rio",
-					"empresa": "Z"
-				}
-			],
-			"skills": [
-				"Prolog",
-				"C#",
-				"Visual Studio"
-			],
-			"contacts": [{
-					"userid": 0
-				},
-				{
-					"userid": 3
-				},
-				{
-					"userid": 4
-				}
-			],
-			"mencoes": [{
-					"userid": 3
-				},
-				{
-					"userid": 4
-				}
-			],
-			"visualizacoes": 12
-		},
-		{
-			"id": 2,
-			"nome": "teste3",
-			"idade": 40,
-			"email": "teste3@teste.pt",
-			"formacaoAcademica": [{
-				"ano": 1995,
-				"formacao": "12"
-			}],
-			"cargosProfissionais": [{
-					"ano": 2011,
-					"cargo": "Adminstrativo",
-					"empresa": "X"
-				},
-				{
-					"ano": 2010,
-					"cargo": "Estagi?rio",
-					"empresa": "X"
-				}
-			],
-			"skills": [
-				"Prolog",
-				"C#",
-				"Visual Studio"
-			],
-			"contacts": [{
-				"userid": 0
-			}],
-			"mencoes": [{
-				"userid": 0
-			}],
-			"visualizacoes": 150
-		},
-		{
-			"id": 3,
-			"nome": "teste4",
-			"idade": 32,
-			"email": "teste4@teste.pt",
-			"formacaoAcademica": [{
-				"ano": 2011,
-				"formacao": "MEI"
-			}],
-			"cargosProfissionais": [{
-					"ano": 2011,
-					"cargo": "Administrador de base de dados",
-					"empresa": "Z"
-				},
-				{
-					"ano": 2011,
-					"cargo": "Developer",
-					"empresa": "A"
-				}
-			],
-			"skills": [
-				"C++",
-				"Angular",
-				"Javascript"
-			],
-			"contacts": [{
-					"userid": 1
-				},
-				{
-					"userid": 4
-				}
-			],
-			"mencoes": [{
-					"userid": 1
-				},
-				{
-					"userid": 2
-				}
-			],
-			"visualizacoes": 12
-		},
-		{
-			"id": 4,
-			"nome": "teste5",
-			"idade": 60,
-			"email": "teste5@teste.pt",
-			"formacaoAcademica": [{
-					"ano": 2015,
-					"formacao": "LEI"
-				},
-				{
-					"ano": 2012,
-					"formacao": "12"
-				}
-			],
-			"cargosProfissionais": [{
-					"ano": 2011,
-					"cargo": "Administrador de base de dados",
-					"empresa": "Z"
-				},
-				{
-					"ano": 2010,
-					"cargo": "Estagi?rio",
-					"empresa": "X"
-				}
-			],
-			"skills": [
-				"Python",
-				"Typescript",
-				"Kotlin"
-			],
-			"contacts": [{
-					"userid": 1
-				},
-				{
-					"userid": 3
-				}
-			],
-			"mencoes": [],
-			"visualizacoes": 300
-		}
-	]
+  "grafoSocial": [
+    {
+      "skills": [
+        "Java",
+        "C",
+        "Nebeans"
+      ],
+      "idade": 20,
+      "formacaoAcademica": [
+        {
+          "ano": 2000,
+          "formacao": "LEI"
+        },
+        {
+          "ano": 1998,
+          "formacao": "12"
+        }
+      ],
+      "visualizacoes": 500,
+      "nome": "teste1",
+      "id": 0,
+      "cargosProfissionais": [
+        {
+          "ano": 2001,
+          "cargo": "Desenvolvedor",
+          "empresa": "X"
+        },
+        {
+          "ano": 2000,
+          "cargo": "Estagi?rio",
+          "empresa": "A"
+        }
+      ],
+      "mencoes": [
+        {
+          "userid": 3
+        },
+        {
+          "userid": 4
+        }
+      ],
+      "email": "teste1@teste.pt",
+      "contacts": [
+        {
+          "userid": 1
+        },
+        {
+          "userid": 2
+        }
+      ]
+    },
+    {
+      "skills": [
+        "Prolog",
+        "C#",
+        "Visual Studio"
+      ],
+      "idade": 20,
+      "formacaoAcademica": [
+        {
+          "ano": 2010,
+          "formacao": "LSIG"
+        },
+        {
+          "ano": 1995,
+          "formacao": "12"
+        }
+      ],
+      "visualizacoes": 12,
+      "nome": "teste2",
+      "id": 1,
+      "cargosProfissionais": [
+        {
+          "ano": 2011,
+          "cargo": "Administrador de base de dados",
+          "empresa": "A"
+        },
+        {
+          "ano": 2010,
+          "cargo": "Estagi?rio",
+          "empresa": "Z"
+        }
+      ],
+      "mencoes": [
+        {
+          "userid": 3
+        },
+        {
+          "userid": 4
+        }
+      ],
+      "email": "teste2@teste.pt",
+      "contacts": [
+        {
+          "userid": 0
+        },
+        {
+          "userid": 3
+        },
+        {
+          "userid": 4
+        }
+      ]
+    },
+    {
+      "skills": [
+        "Prolog",
+        "C#",
+        "Visual Studio"
+      ],
+      "idade": 40,
+      "formacaoAcademica": [
+        {
+          "ano": 1995,
+          "formacao": "12"
+        }
+      ],
+      "visualizacoes": 150,
+      "nome": "teste3",
+      "id": 2,
+      "cargosProfissionais": [
+        {
+          "ano": 2011,
+          "cargo": "Adminstrativo",
+          "empresa": "X"
+        },
+        {
+          "ano": 2010,
+          "cargo": "Estagi?rio",
+          "empresa": "X"
+        }
+      ],
+      "mencoes": [
+        {
+          "userid": 0
+        }
+      ],
+      "email": "teste3@teste.pt",
+      "contacts": [
+        {
+          "userid": 0
+        }
+      ]
+    },
+    {
+      "skills": [
+        "C++",
+        "Angular",
+        "Javascript"
+      ],
+      "idade": 32,
+      "formacaoAcademica": [
+        {
+          "ano": 2011,
+          "formacao": "MEI"
+        }
+      ],
+      "visualizacoes": 12,
+      "nome": "teste4",
+      "id": 3,
+      "cargosProfissionais": [
+        {
+          "ano": 2011,
+          "cargo": "Administrador de base de dados",
+          "empresa": "Z"
+        },
+        {
+          "ano": 2011,
+          "cargo": "Developer",
+          "empresa": "A"
+        }
+      ],
+      "mencoes": [
+        {
+          "userid": 1
+        },
+        {
+          "userid": 2
+        }
+      ],
+      "email": "teste4@teste.pt",
+      "contacts": [
+        {
+          "userid": 1
+        },
+        {
+          "userid": 4
+        }
+      ]
+    },
+    {
+      "skills": [
+        "Python",
+        "Typescript",
+        "Kotlin"
+      ],
+      "idade": 60,
+      "formacaoAcademica": [
+        {
+          "ano": 2015,
+          "formacao": "LEI"
+        },
+        {
+          "ano": 2012,
+          "formacao": "12"
+        }
+      ],
+      "visualizacoes": 300,
+      "nome": "teste5",
+      "id": 4,
+      "cargosProfissionais": [
+        {
+          "ano": 2011,
+          "cargo": "Administrador de base de dados",
+          "empresa": "Z"
+        },
+        {
+          "ano": 2010,
+          "cargo": "Estagi?rio",
+          "empresa": "X"
+        }
+      ],
+      "mencoes": [],
+      "email": "teste5@teste.pt",
+      "contacts": [
+        {
+          "userid": 1
+        },
+        {
+          "userid": 3
+        }
+      ]
+    }
+  ]
 }

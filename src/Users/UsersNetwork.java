@@ -21,423 +21,420 @@ import java.util.logging.Logger;
  */
 public class UsersNetwork<T> implements NetworkADT<T> {
 
-    protected final int DEFAULT_CAPACITY = 2;
-    protected int count; //used in DFS
-    protected int numVertices;   // number of vertices in the graph
-    protected boolean[][] adjMatrix;   // adjacency matrix
-    protected double[][] NetworkMatrix;   // Network matrix
-    protected T[] vertices;   // values of vertices
+	protected final int DEFAULT_CAPACITY = 2;
+	protected int count; //used in DFS
+	protected int numVertices;   // number of vertices in the graph
+	protected boolean[][] adjMatrix;   // adjacency matrix
+	protected double[][] NetworkMatrix;   // Network matrix
+	protected T[] vertices;   // values of vertices
 
-    public UsersNetwork() {
-        count = 0;
-        numVertices = 0;
-        this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
-        this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
-        this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
-    }
+	public UsersNetwork() {
+		count = 0;
+		numVertices = 0;
+		this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+		this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+		this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
+	}
 
-    @Override
-    public void addEdge(Object vertex1, Object vertex2, double weight) { //grafo pesado / network
-        addEdge(getIndex((T) vertex1), getIndex((T) vertex2), weight);
-    }
+	@Override
+	public void addEdge(Object vertex1, Object vertex2, double weight) { //grafo pesado / network
+		addEdge(getIndex((T) vertex1), getIndex((T) vertex2), weight);
+	}
 
-    private void addEdge(int index1, int index2, double weight) { //grafo pesado / network
-        if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
-            NetworkMatrix[index1][index2] = weight;
-            NetworkMatrix[index2][index1] = weight;
-            adjMatrix[index1][index2] = true;
-            adjMatrix[index2][index1] = true;
-        }
-    }
+	private void addEdge(int index1, int index2, double weight) { //grafo pesado / network
+		if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
+			NetworkMatrix[index1][index2] = weight;
+			NetworkMatrix[index2][index1] = weight;
+			adjMatrix[index1][index2] = true;
+			adjMatrix[index2][index1] = true;
+		}
+	}
 
-    @Override
-    public void addEdge(Object vertex1, Object vertex2) { //grafo
-        addEdge(getIndex((T) vertex1), getIndex((T) vertex2));
-    }
+	@Override
+	public void addEdge(Object vertex1, Object vertex2) { //grafo
+		addEdge(getIndex((T) vertex1), getIndex((T) vertex2));
+	}
 
-    private void addEdge(int index1, int index2) { //grafo
-        if (indexIsValid(index1) && indexIsValid(index2)) {
-            adjMatrix[index1][index2] = true;
-            adjMatrix[index2][index1] = true;
-        }
-    }
+	private void addEdge(int index1, int index2) { //grafo
+		if (indexIsValid(index1) && indexIsValid(index2)) {
+			adjMatrix[index1][index2] = true;
+			adjMatrix[index2][index1] = true;
+		}
+	}
 
-    private int getIndex(T vertex1) {
-        int i = 0;
-        boolean hasFound = false;
-        while (i < vertices.length && hasFound == false) {
-            if (vertex1.equals(vertices[i])) {
-                hasFound = true;
-            } else {
-                i++;
-            }
-        }
-        return i;
-    }
+	private int getIndex(T vertex1) {
+		int i = 0;
+		boolean hasFound = false;
+		while (i < vertices.length && hasFound == false) {
+			if (vertex1.equals(vertices[i])) {
+				hasFound = true;
+			} else {
+				i++;
+			}
+		}
+		return i;
+	}
 
-    private boolean indexIsValidNetwork(int index) {
-        return (index < NetworkMatrix.length && index >= 0);
-    }
+	private boolean indexIsValidNetwork(int index) {
+		return (index < NetworkMatrix.length && index >= 0);
+	}
 
+	private boolean indexIsValid(int index) {
+		return (index < adjMatrix.length && index >= 0);
+	}
+
+	@Override
+	public double shortestPathWeight(Object vertex1, Object vertex2) { // Já feito noutro método
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void addVertex(T vertex) {
+		if (numVertices == vertices.length) {
+			expandCapacity();
+		}
+		vertices[numVertices] = vertex;
+		for (int i = 0; i <= numVertices; i++) {
+			adjMatrix[numVertices][i] = false;
+			adjMatrix[i][numVertices] = false;
+		}
+		numVertices++;
+	}
+
+	@Override
+	public void removeVertex(T vertex) {
+		int index = getIndex(vertex);
+		vertices[index] = null;
+	}
+
+	/*
     private boolean indexIsValid(int index) {
         return (index < adjMatrix.length && index >= 0);
     }
+	 */
+	@Override
+	public void removeEdge(Object vertex1, Object vertex2) {
+		removeEdge(getIndex((T) vertex1), getIndex((T) vertex2));
+	}
 
-    @Override
-    public double shortestPathWeight(Object vertex1, Object vertex2) { // Já feito noutro método
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	private void removeEdge(int index1, int index2) {
+		if (indexIsValid(index1) && indexIsValid(index2)) {
+			adjMatrix[index1][index2] = false;
+			adjMatrix[index2][index1] = false;
+			NetworkMatrix[index1][index2] = 0;
+			NetworkMatrix[index2][index1] = 0;
+		}
+	}
 
-    @Override
-    public void addVertex(T vertex) {
-        if (numVertices == vertices.length) {
-            expandCapacity();
-        }
-        vertices[numVertices] = vertex;
-        for (int i = 0; i <= numVertices; i++) {
-            adjMatrix[numVertices][i] = false;
-            adjMatrix[i][numVertices] = false;
-        }
-        numVertices++;
-    }
+	@Override
+	public Iterator iteratorBFS(T startVertex) {
+		try {
+			return iteratorBFS(getIndex(startVertex));
+		} catch (QueueEmptyException ex) {
+			Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
 
-    @Override
-    public void removeVertex(T vertex) {
-        int index = getIndex(vertex);
-        vertices[index] = null;
-    }
+	private Iterator iteratorBFS(int startIndex) throws QueueEmptyException {
 
-    /*
-    private boolean indexIsValid(int index) {
-        return (index < adjMatrix.length && index >= 0);
-    }
-     */
-    @Override
-    public void removeEdge(Object vertex1, Object vertex2) {
-        removeEdge(getIndex((T) vertex1), getIndex((T) vertex2));
-    }
+		Integer x;
+		LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
+		ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
-    private void removeEdge(int index1, int index2) {
-        if (indexIsValid(index1) && indexIsValid(index2)) {
-            adjMatrix[index1][index2] = false;
-            adjMatrix[index2][index1] = false;
-            NetworkMatrix[index1][index2] = 0;
-            NetworkMatrix[index2][index1] = 0;
-        }
-    }
+		if (!indexIsValid(startIndex)) {
+			return resultList.iterator();
+		}
 
-    @Override
-    public Iterator iteratorBFS(T startVertex) {
-        try {
-            return iteratorBFS(getIndex(startVertex));
-        } catch (QueueEmptyException ex) {
-            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+		boolean[] visited = new boolean[numVertices];
 
-    private Iterator iteratorBFS(int startIndex) throws QueueEmptyException {
+		for (int i = 0; i < numVertices; i++) {
+			visited[i] = false;
+		}
 
-        Integer x;
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+		traversalQueue.enqueue(new Integer(startIndex));
+		visited[startIndex] = true;
 
-        if (!indexIsValid(startIndex)) {
-            return resultList.iterator();
-        }
+		while (!traversalQueue.isEmpty()) {
+			x = traversalQueue.dequeue();
+			resultList.addToRear(vertices[x.intValue()]);
+			/**
+			 * Find all vertices adjacent to x that have not been visited and queue them up
+			 */
+			for (int i = 0; i < numVertices; i++) {
+				if (adjMatrix[x.intValue()][i] && !visited[i]) {
+					traversalQueue.enqueue(new Integer(i));
+					visited[i] = true;
+				}
+			}
+		}
+		return resultList.iterator();
+	}
 
-        boolean[] visited = new boolean[numVertices];
+	@Override
+	public Iterator iteratorDFS(T startVertex) {
+		try {
+			return iteratorDFS(getIndex(startVertex));
+		} catch (EmptyCollectionException ex) {
+			Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
 
-        for (int i = 0; i < numVertices; i++) {
-            visited[i] = false;
-        }
+	private Iterator iteratorDFS(int startIndex) throws EmptyCollectionException {
+		Integer x;
+		boolean found;
+		LinkedStack<Integer> traversalStack = new LinkedStack<>();
+		ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
+		boolean[] visited = new boolean[numVertices];
+		if (!indexIsValid(startIndex)) {
+			return resultList.iterator();
+		}
+		for (int i = 0; i < numVertices; i++) {
+			visited[i] = false;
+		}
+		traversalStack.push(new Integer(startIndex));
+		resultList.addToRear(vertices[startIndex]);
+		visited[startIndex] = true;
+		count++;
 
-        traversalQueue.enqueue(new Integer(startIndex));
-        visited[startIndex] = true;
+		while (!traversalStack.isEmpty()) {
+			x = traversalStack.peek();
+			found = false;
+			/**
+			 * Find a vertex adjacent to x that has not been visited and push it on the stack
+			 */
+			for (int i = 0; (i < numVertices) && !found; i++) {
+				if (adjMatrix[x.intValue()][i] && !visited[i]) {
+					traversalStack.push(new Integer(i));
+					resultList.addToRear(vertices[i]);
+					visited[i] = true;
+					count++;
+					found = true;
+				}
+			}
+			if (!found && !traversalStack.isEmpty()) {
+				traversalStack.pop();
+			}
+		}
+		return resultList.iterator();
+	}
 
-        while (!traversalQueue.isEmpty()) {
-            x = traversalQueue.dequeue();
-            resultList.addToRear(vertices[x.intValue()]);
-            /**
-             * Find all vertices adjacent to x that have not been visited and
-             * queue them up
-             */
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalQueue.enqueue(new Integer(i));
-                    visited[i] = true;
-                }
-            }
-        }
-        return resultList.iterator();
-    }
+	@Override
+	public Iterator iteratorShortestPath(Object startVertex, Object targetVertex) {
+		try {
+			return iteratorShortestPath(getIndex((T) startVertex), getIndex((T) targetVertex));
+		} catch (ListEmptyException ex) {
+			Logger.getLogger(UsersNetwork.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
 
-    @Override
-    public Iterator iteratorDFS(T startVertex) {
-        try {
-            return iteratorDFS(getIndex(startVertex));
-        } catch (EmptyCollectionException ex) {
-            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+	public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
+		int i = 0, j = 0;
+		//Guarda os vértices pertencentes ao menor caminho encontrado
+		ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
+		//Guarda os vértices que ainda não foram visitados
+		ArrayUnorderedList<T> naoVisitados = new ArrayUnorderedList<>();
+		//Guarda as distâncias
+		double distancia[] = new double[numVertices];
+		// Variavel que recebe os vertices pertencentes ao menor caminho
+		int verticeCaminho = startVertex;
+		// Variavel que guarda o vertice que esta a ser visitado
+		int actual;
+		// Variavel que marca o vizinho do vertice atualmente visitado
+		int vizinho;
+		double menor = 9999;
 
-    private Iterator iteratorDFS(int startIndex) throws EmptyCollectionException {
-        Integer x;
-        boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
-        boolean[] visited = new boolean[numVertices];
-        if (!indexIsValid(startIndex)) {
-            return resultList.iterator();
-        }
-        for (int i = 0; i < numVertices; i++) {
-            visited[i] = false;
-        }
-        traversalStack.push(new Integer(startIndex));
-        resultList.addToRear(vertices[startIndex]);
-        visited[startIndex] = true;
-        count++;
+		//Iguala todos os elementos de distânica a 0
+		for (i = 0; i < numVertices; i++) {
+			distancia[i] = 0;
+		}
 
-        while (!traversalStack.isEmpty()) {
-            x = traversalStack.peek();
-            found = false;
-            /**
-             * Find a vertex adjacent to x that has not been visited and push it
-             * on the stack
-             */
-            for (int i = 0; (i < numVertices) && !found; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
-                    traversalStack.push(new Integer(i));
-                    resultList.addToRear(vertices[i]);
-                    visited[i] = true;
-                    count++;
-                    found = true;
-                }
-            }
-            if (!found && !traversalStack.isEmpty()) {
-                traversalStack.pop();
-            }
-        }
-        return resultList.iterator();
-    }
+		//Adiciona todos os elementos à lista dos não visitados
+		for (i = 0; i < vertices.length; i++) {
+			naoVisitados.addToRear(vertices[i]);
+		}
 
-    @Override
-    public Iterator iteratorShortestPath(Object startVertex, Object targetVertex) {
-        try {
-            return iteratorShortestPath(getIndex((T) startVertex), getIndex((T) targetVertex));
-        } catch (ListEmptyException ex) {
-            Logger.getLogger(UsersNetwork.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+		naoVisitados.remove(vertices[startVertex]);
 
-    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
-        int i = 0, j = 0;
-        //Guarda os vértices pertencentes ao menor caminho encontrado
-        ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
-        //Guarda os vértices que ainda não foram visitados
-        ArrayUnorderedList<T> naoVisitados = new ArrayUnorderedList<>();
-        //Guarda as distâncias
-        double distancia[] = new double[numVertices];
-        // Variavel que recebe os vertices pertencentes ao menor caminho
-        int verticeCaminho = startVertex;
-        // Variavel que guarda o vertice que esta a ser visitado
-        int actual;
-        // Variavel que marca o vizinho do vertice atualmente visitado
-        int vizinho;
-        double menor = 9999;
+		//Enquanto todos os vértices não tiverem sido visitados...
+		while (naoVisitados.contains(vertices[targetVertex])) {
 
-        //Iguala todos os elementos de distânica a 0
-        for (i = 0; i < numVertices; i++) {
-            distancia[i] = 0;
-        }
+			actual = verticeCaminho;
 
-        //Adiciona todos os elementos à lista dos não visitados
-        for (i = 0; i < vertices.length; i++) {
-            naoVisitados.addToRear(vertices[i]);
-        }
+			for (i = 0; i < numVertices; i++) {
+				if (NetworkMatrix[actual][i] != 0 && naoVisitados.contains(vertices[i])) {
+					vizinho = getIndex(vertices[i]);
+					if (NetworkMatrix[actual][i] < menor) {
+						menor = NetworkMatrix[actual][i];
+						verticeCaminho = vizinho;
+					}
 
-        naoVisitados.remove(vertices[startVertex]);
+				}
+			}
+			if ((menor != Double.POSITIVE_INFINITY) || (menor != Double.NEGATIVE_INFINITY) || (menor != Double.NaN)) {
+				menorCaminho.addToRear(menor);
+				distancia[verticeCaminho] += menor;
+				menor = 9999;
+				naoVisitados.remove(vertices[verticeCaminho]);
+				System.out.println("Vértice actual:" + actual);
+			}return null;
 
-        //Enquanto todos os vértices não tiverem sido visitados...
-        while (naoVisitados.contains(vertices[targetVertex])) {
+		}
+		System.out.println("Vértice actual:" + targetVertex);
+		double num = 0;
+		for (i = 0; i < numVertices; i++) {
+			num += distancia[i];
+		}
+		//System.out.println("Custo total: " + num);
+		
+		return menorCaminho.iterator();
+	}
 
-            actual = verticeCaminho;
+	@Override
+	public boolean isEmpty() {
+		return numVertices == 0;
+	}
 
-            for (i = 0; i < numVertices; i++) {
-                if (NetworkMatrix[actual][i] != 0 && naoVisitados.contains(vertices[i])) {
-                    vizinho = getIndex(vertices[i]);
-                    if (NetworkMatrix[actual][i] < menor) {
-                        menor = NetworkMatrix[actual][i];
-                        verticeCaminho = vizinho;
-                    }
+	@Override
+	public boolean isConnected() {
+		int visited[] = new int[adjMatrix.length];
 
-                }
-            }
-            menorCaminho.addToRear(menor);
-            distancia[verticeCaminho] += menor;
-            menor = 9999;
-            naoVisitados.remove(vertices[verticeCaminho]);
+		for (int row = 0; row < adjMatrix.length; row++) {
+			for (int col = 0; col < adjMatrix.length; col++) {
 
-            System.out.println("Vértice actual:" + actual);
+				if (adjMatrix[row][col] == true && visited[row] == 0) {
+					visited[row] = 1;
+				}
 
-        }
-        System.out.println("Vértice actual:" + targetVertex);
-        double num = 0;
-        for (i = 0; i < numVertices; i++) {
-            num += distancia[i];
-        }
-        System.out.println("Soma: " + num);
-        return menorCaminho.iterator();
-    }
+			}
+		}
 
-    @Override
-    public boolean isEmpty() {
-        return numVertices == 0;
-    }
+		boolean connected = false;
 
-    
+		for (int vertex = 0; vertex < adjMatrix.length; vertex++) {
+			if (visited[vertex] == 1) {
+				connected = true;
+			} else {
+				connected = false;
+				break;
+			}
+		}
 
-    @Override
-    public boolean isConnected() {
-        int visited[] = new int[adjMatrix.length];
+		return connected;
+	}
 
-        for (int row = 0; row < adjMatrix.length; row++) {
-            for (int col = 0; col < adjMatrix.length; col++) {
+	@Override
+	public int size() {
+		return numVertices;
+	}
 
-                if (adjMatrix[row][col] == true && visited[row] == 0) {
-                    visited[row] = 1;
-                }
+	public boolean IsNetworkComplete() {
+		int count = 0;
+		for (int i = 0; i < this.numVertices; i++) {
+			for (int j = 0; j < this.numVertices; j++) {
+				if (adjMatrix[i][j] == true) {
+					count++;
+				}
+			}
+		}
+		return count == (this.numVertices * this.numVertices);
 
-            }
-        }
+	}
 
-        boolean connected = false;
+	protected void expandCapacity() {
+		T[] newVertices = (T[]) (new Object[vertices.length + 1]);
+		boolean[][] newAdjMatrix = new boolean[adjMatrix.length + 1][adjMatrix.length + 1];
+		double[][] newNetworkMatrix = new double[NetworkMatrix.length + 1][NetworkMatrix.length + 1];
 
-        for (int vertex = 0; vertex < adjMatrix.length; vertex++) {
-            if (visited[vertex] == 1) {
-                connected = true;
-            } else {
-                connected = false;
-                break;
-            }
-        }
+		for (int i = 0; i < vertices.length; i++) {
+			newVertices[i] = vertices[i];
 
-        return connected;
-    }
+		}
 
-    @Override
-    public int size() {
-        return numVertices;
-    }
+		for (int i = 0; i < adjMatrix.length; i++) {
+			for (int j = 0; j < adjMatrix.length; j++) {
+				newAdjMatrix[i][j] = adjMatrix[i][j];
+			}
+		}
 
-    public boolean IsNetworkComplete() {
-        int count = 0;
-        for (int i = 0; i < this.numVertices; i++) {
-            for (int j = 0; j < this.numVertices; j++) {
-                if (adjMatrix[i][j] == true) {
-                    count++;
-                }
-            }
-        }
-        return count == (this.numVertices * this.numVertices);
+		for (int i = 0; i < NetworkMatrix.length; i++) {
+			for (int j = 0; j < NetworkMatrix.length; j++) {
+				newNetworkMatrix[i][j] = NetworkMatrix[i][j];
+			}
+		}
 
-    }
+		vertices = newVertices;
+		adjMatrix = newAdjMatrix;
+		NetworkMatrix = newNetworkMatrix;
+	}
 
-    protected void expandCapacity() {
-        T[] newVertices = (T[]) (new Object[vertices.length + 1]);
-        boolean[][] newAdjMatrix = new boolean[adjMatrix.length + 1][adjMatrix.length + 1];
-        double[][] newNetworkMatrix = new double[NetworkMatrix.length + 1][NetworkMatrix.length + 1];
+	@Override
+	public String toString() {
 
-        for (int i = 0; i < vertices.length; i++) {
-            newVertices[i] = vertices[i];
+		System.out.println("\nVertices:\n");
+		for (int i = 0; i < vertices.length; i++) {
+			System.out.println("Position " + i + ": " + vertices[i]);
+		}
 
-        }
+		System.out.println("\nNetworkMatrix:\n");
+		for (int i = 0; i < adjMatrix.length; i++) {
+			for (int j = 0; j < adjMatrix.length; j++) {
+				System.out.println("Position " + i + j + ": " + NetworkMatrix[i][j]);
+			}
+		}
 
-        for (int i = 0; i < adjMatrix.length; i++) {
-            for (int j = 0; j < adjMatrix.length; j++) {
-                newAdjMatrix[i][j] = adjMatrix[i][j];
-            }
-        }
+		return null;
+	}
 
-        for (int i = 0; i < NetworkMatrix.length; i++) {
-            for (int j = 0; j < NetworkMatrix.length; j++) {
-                newNetworkMatrix[i][j] = NetworkMatrix[i][j];
-            }
-        }
+	public String NetworkTable() {
+		BigDecimal bd;
+		String toReturn = "\nMatriz de Adjacência Network:\n\n";
+		toReturn += " \t";
+		for (int x = 0; x < NetworkMatrix.length; x++) {
+			toReturn += "  " + x + "   |  ";
+		}
+		toReturn += "\n\n";
+		for (int i = 0; i < NetworkMatrix.length; i++) {
 
-        vertices = newVertices;
-        adjMatrix = newAdjMatrix;
-        NetworkMatrix = newNetworkMatrix;
-    }
+			toReturn += "" + i + "\t";
+			for (int j = 0; j < NetworkMatrix.length; j++) {
+				bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
+				toReturn += bd + " |  ";
 
-    @Override
-    public String toString() {
+			}
+			toReturn += "\n";
 
-        System.out.println("\nVertices:\n");
-        for (int i = 0; i < vertices.length; i++) {
-            System.out.println("Position " + i + ": " + vertices[i]);
-        }
+		}
 
-        System.out.println("\nNetworkMatrix:\n");
-        for (int i = 0; i < adjMatrix.length; i++) {
-            for (int j = 0; j < adjMatrix.length; j++) {
-                System.out.println("Position " + i + j + ": " + NetworkMatrix[i][j]);
-            }
-        }
+		return toReturn;
+	}
 
-        return null;
-    }
+	public String GraphTable() {
 
-    public String NetworkTable() {
-        BigDecimal bd;
-        String toReturn = "\nMatriz de Adjacência Network:\n\n";
-        toReturn += " \t";
-        for (int x = 0; x < NetworkMatrix.length; x++) {
-            toReturn += "  " + x + "   |  ";
-        }
-        toReturn += "\n\n";
-        for (int i = 0; i < NetworkMatrix.length; i++) {
+		String toReturn = "\nMatriz de Adjacência:\n\n";
+		toReturn += " \t";
+		for (int x = 0; x < this.numVertices; x++) {
+			toReturn += x + " ";
+		}
+		toReturn += "\n\n";
+		for (int i = 0; i < this.numVertices; i++) {
 
-            toReturn += "" + i + "\t";
-            for (int j = 0; j < NetworkMatrix.length; j++) {
-                bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
-                toReturn += bd + " |  ";
-                
+			toReturn += "" + i + "\t";
+			for (int j = 0; j < this.numVertices; j++) {
 
-            }
-            toReturn += "\n";
+				if (adjMatrix[i][j] == true) {
+					toReturn += "1 ";
+				} else {
+					toReturn += "0 ";
+				}
+			}
+			toReturn += "\n";
 
-        }
+		}
+		return toReturn;
 
-        return toReturn;
-    }
-
-    public String GraphTable() {
-
-        String toReturn = "\nMatriz de Adjacência:\n\n";
-        toReturn += " \t";
-        for (int x = 0; x < this.numVertices; x++) {
-            toReturn += x + " ";
-        }
-        toReturn += "\n\n";
-        for (int i = 0; i < this.numVertices; i++) {
-
-            toReturn += "" + i + "\t";
-            for (int j = 0; j < this.numVertices; j++) {
-
-                if (adjMatrix[i][j] == true) {
-                    toReturn += "1 ";
-                } else {
-                    toReturn += "0 ";
-                }
-            }
-            toReturn += "\n";
-
-        }
-        return toReturn;
-
-    }
+	}
 
 }

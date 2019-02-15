@@ -1,4 +1,5 @@
 package Users;
+
 /**
  * Nome: DAVID ALEXANDRE FREIRE DOS SANTOS Numero:8170138 Turma:LSIRC
  *
@@ -16,6 +17,7 @@ public class Menu {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         User[] user = UsersManagement.UserReader("SocialGraph.json");
+        //User[] user = UsersManagement.UserReader("teste.json");
         UsersManagement g1 = new UsersManagement();
         g1.LoadVertex(user);
         g1.LoadEdges();
@@ -58,7 +60,7 @@ public class Menu {
                 //Editar ligações
                 case 2:
                     g1.editMencoes(user);
-                    //g1.print(user);
+                    g1.print(user);
                     break;
                 //Editar visualizações
 
@@ -69,25 +71,57 @@ public class Menu {
 
                 //É completo?
                 case 4:
-                    System.out.println("Is complete? " + g1.IsNetworkComplete());
+                    System.out.println("O grafo é completo? " + g1.IsNetworkComplete());
                     break;
 
                 //É conexo?
                 case 5: //VALIDAR SE ESTÁ CERTO OU NÃO COM GRAFO CONEXO!
-                    System.out.println("\nIs connected? " + g1.isConnected());
+                    System.out.println("É conexo? " + g1.isConnected());
                     break;
 
                 //Descobrir o caminho mais curto entre 2 utilizadores
                 case 6:
+                    String user1,
+                     user2;
+
+                    int cont = 0;
                     System.out.println("\nCusto de cada caminho: \n");
-                    Iterator sp = g1.iteratorShortestPath(user[3], user[1]);
-                    while (sp.hasNext()) {
-                        System.out.println(sp.next());
+                    System.out.print("Email do utilizador de partida: ");
+                    user1 = scanner.next();
+                    System.out.print("Email do utilizador de destino: ");
+                    user2 = scanner.next();
+                    for (int x = 0; x < user.length; x++) {
+                        if (user[x].getEmail().equals(user1) || user[x].getEmail().equals(user2)) {
+                            cont++;
+                        }
+
+                    }
+                    if (cont == 2) {
+                        for (int i = 0; i < user.length; i++) {
+                            if (user[i].getEmail().equals(user1)) {
+                                for (int j = 0; j < user.length; j++) {
+                                    if (user[j].getEmail().equals(user2)) {
+                                        Iterator sp = g1.iteratorShortestPath(user[i], user[j]);
+                                        while (sp.hasNext()) {
+                                            if (sp.next() != null) {
+                                                System.out.println(sp.next());
+                                            } else {
+                                                System.out.println("nao existe um caminho possivel");
+                                            }
+
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    } else {
+                        System.out.println("O(s) email(s) não existe(m)");
                     }
                     break;
 
                 //Utilizadores alcançáveis a partir de um utilizador
-                case 7:
+                case 7: //5
                     newUser = g1.searchEmail(user);
                     System.out.println("\nIterator BFS\n");
                     Iterator bfs = g1.iteratorBFS(newUser);
@@ -102,23 +136,24 @@ public class Menu {
                     break;
 
                 //Utilizadores não alcançáveis a partir de um utilizador 
-                case 8:
+                case 8: //5.1
                     g1.notReachable(user);
                     break;
 
                 //Verificar a partir de um dado utilizador qual a lista de utilizadores que fazem parte dos contactos
                 //da lista que têm determinada skill e trabalham em determinada empresa
-                case 9:
-                    g1.findUsers(user);
+                case 9: //6
+                    g1.FindSkillsFormacao(user);
                     break;
 
                 //Apresentar uma lista de utilizadores de uma empresa passada...
-                case 10:
-                    System.out.println("Introduza a empresa pretendida");
-                    empresa = scanner.next();
-                    newUser = g1.searchEmail(user);
-                    System.out.println(g1.findUsersThatWorkedInCompany(user, newUser, empresa));
-                    
+                case 10: //7
+                    g1.AvgViewsMencoes(user);
+                    /*  System.out.println("Introduza a empresa pretendida");
+                                            empresa = scanner.next();
+                                            newUser = g1.searchEmail(user);
+                                            System.out.println(g1.findUsersThatWorkedInCompany(user, newUser, empresa));
+                     */
                     break;
                 //Verificar que os utilizadores que ocupam um cargo numa empresa....
                 case 11:
@@ -145,7 +180,8 @@ public class Menu {
                     break;
             }
 
-        } while (option != 0);
+        } while (option
+                != 0);
     }
 
 }
