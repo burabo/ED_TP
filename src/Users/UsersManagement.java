@@ -1,16 +1,12 @@
 package Users;
 
 import LinkedBinaryTree.ArrayUnorderedList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -256,7 +252,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
         JSONObject final_obj = new JSONObject();
         final_obj.put("grafoSocial", array_obj);
-        
+
         try (FileWriter file = new FileWriter("SocialGraph.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonParser jp = new JsonParser();
@@ -408,17 +404,31 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         return resultList.toString();
     }
 
-    public void doWorkersConnect(User[] user, String empresa, String empresa2) {
-        for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < numVertices; j++) {
-                for (int k = 0; k < user[i].cp.length; k++) {
-                    for (int l = 0; l < user[j].cp.length; l++) {
-                        if (user[i].cp[k].getEmpresa().equals(empresa) && user[j].cp[l].getEmpresa().equals(empresa2)
-                                || user[j].cp[l].getEmpresa().equals(empresa) && user[i].cp[k].getEmpresa().equals(empresa2)) {
-                            if (adjMatrix[i][j]) {
-                                System.out.println("Utilizadores " + user[i].getEmail() + " e " + user[j].getEmail() + " relacionam-se");
-                            } else {
-                                System.out.println("Utilizadores " + user[i].getEmail() + " e " + user[j].getEmail() + " não se relacionam");
+    public void GetFormacoesAlcancaveis(User[] users) {
+        String formacao, email;
+        int cont = 0;
+        System.out.println("Introduza o email do utilizador: ");
+        email = scanner.next();
+        for (int x = 0; x < users.length; x++) {
+            if (users[x].getEmail().equals(email)) {
+                cont++;
+            }
+        }
+        if (cont == 0) {
+            System.out.println("O email não existe.");
+        } else {
+            System.out.println("Introduza a formação do utilizador: ");
+            formacao = scanner.next();
+
+            for (int i = 0; i < users.length; i++) {
+                if (users[i].getEmail().equals(email)) {
+                    for (int j = 0; j < adjMatrix.length; j++) {
+                        if (adjMatrix[i][j] == true) {
+                            for (int k = 0; k < users[j].getFA().length; k++) {
+                                if (users[j].fa[k].getFormacao().equals(formacao)) {
+                                    System.out.println("Utilizador encontrado! " + users[j]);
+                                }
+
                             }
                         }
                     }

@@ -28,17 +28,21 @@ public class Menu {
 
         User newUser;
         int option;
-        String email, empresa, empresa2, skill;
         String options[] = {"Consultar informação relativa a um utilizador",
-            "Editar menções", "Editar visualizações", "O grafo é completo?", "O grafo é conexo?",
+            "Editar menções",
+            "Editar visualizações",
+            "O grafo é completo?",
+            "O grafo é conexo?",
             "Descobrir o caminho mais curto entre 2 utilizadores",
             "Utilizadores alcançáveis a partir de um utilizador",
             "Utilizadores não alcançáveis a partir de um utilizador",
-            "Verificar a partir de um dado utilizador qual a lista de utilizadoresque fazem parte dos contactos da lista que têm determinada skill e trabalham em determinada empresa",
-            "Lista de utilizadores de uma empresa passada como parâmetro que estão relacionados com um utilizador também passado como parâmetro",
-            "Verificar que os utilizadores que ocupam um cargo numa empresa não estão relacionados com utilizadores de outras empresas",
-            "Lista de utilizadores que contém um determinado skill no seu perfil ordenado pelo menor custo de ligação(Falta)",
-            "Matriz de Adjacência", "Matriz de Adjacência Network"};
+            "Utilizadores que têm determinadas skills ou formação académica",
+            "Apresentar a média de menções e visualizações dos utilizadores alcançáveis VS geral",
+            "Apresentar utilizadores alcançáveis que possuem uma determinada formação académica",
+            "Determinar utilizadores que ocuparam um determinado cargo (não relacionados)",
+            "Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação",
+            "Apresentar matriz de adjacência",
+            "Apresentar matriz de custo"};
 
         do {
             do {
@@ -58,13 +62,13 @@ public class Menu {
                     break;
 
                 //Editar ligações
-                case 2:
+                case 2: //tópico 2
                     g1.editMencoes(user);
                     g1.print(user);
                     break;
-                //Editar visualizações
 
-                case 3:
+                //Editar visualizações
+                case 3: //tópico 2
                     g1.editViews(user);
                     g1.print(user);
                     break;
@@ -80,7 +84,7 @@ public class Menu {
                     break;
 
                 //Descobrir o caminho mais curto entre 2 utilizadores
-                case 6:
+                case 6: //tópico 4
                     String user1,
                      user2;
 
@@ -106,7 +110,7 @@ public class Menu {
                                             if (sp.next() != null) {
                                                 System.out.println(sp.next());
                                             } else {
-                                                System.out.println("nao existe um caminho possivel");
+                                                System.out.println("não existe um caminho possivel");
                                             }
 
                                         }
@@ -121,7 +125,7 @@ public class Menu {
                     break;
 
                 //Utilizadores alcançáveis a partir de um utilizador
-                case 7: //5
+                case 7: //tópico 5
                     newUser = g1.searchEmail(user);
                     System.out.println("\nIterator BFS\n");
                     Iterator bfs = g1.iteratorBFS(newUser);
@@ -136,52 +140,50 @@ public class Menu {
                     break;
 
                 //Utilizadores não alcançáveis a partir de um utilizador 
-                case 8: //5.1
+                case 8: //tópico 5-1
                     g1.notReachable(user);
                     break;
 
-                //Verificar a partir de um dado utilizador qual a lista de utilizadores que fazem parte dos contactos
-                //da lista que têm determinada skill e trabalham em determinada empresa
-                case 9: //6
+                //Utilizadores que têm determinadas skills ou formação académica
+                case 9: //tópico 6
                     g1.FindSkillsFormacao(user);
                     break;
 
-                //Apresentar uma lista de utilizadores de uma empresa passada...
-                case 10: //7
+                //Apresentar a média de menções e visualizações dos utilizadores alcançáveis VS geral
+                case 10: //tópico 7
                     g1.AvgViewsMencoes(user);
-                    /*  System.out.println("Introduza a empresa pretendida");
-                                            empresa = scanner.next();
-                                            newUser = g1.searchEmail(user);
-                                            System.out.println(g1.findUsersThatWorkedInCompany(user, newUser, empresa));
-                     */
                     break;
-                //Verificar que os utilizadores que ocupam um cargo numa empresa....
-                case 11:
 
-                    System.out.println("Introduza a empresa A: ");
-                    empresa = scanner.next();
-                    System.out.println("Introduza a empresa B: ");
-                    empresa2 = scanner.next();
-                    g1.doWorkersConnect(user, empresa, empresa2);
+                //Apresentar utilizadores alcançáveis que possuem uma determinada formação académica    
+                case 11: //tópico 8
+                    g1.GetFormacoesAlcancaveis(user);
                     break;
-                //Apresentar uma lista de utilizadores que contém um determinado skill...
-                case 12:
-                    System.out.println("Introduza a skill: ");
+
+                //Determinar utilizadores que ocuparam um determinado cargo (não relacionados)
+                case 12: //topico 9
+                    g1.GetFormacoesAlcancaveis(user);
+                    break;
+
+                //Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação
+                case 13: //tópico 10
+
+                    /*System.out.println("Introduza a skill: ");
                     skill = scanner.next();
-                    g1.connectSkill(user, skill);
+                    g1.connectSkill(user, skill);*/
                     break;
+
                 //Matriz de Adjacência    
-                case 13:
+                case 14:
                     System.out.println(g1.GraphTable());
                     break;
-                //Matriz de Adjacênica Network
-                case 14:
+
+                //Matriz de custo
+                case 15:
                     System.out.println(g1.NetworkTable());
                     break;
             }
 
-        } while (option
-                != 0);
+        } while (option != 0);
     }
 
 }
