@@ -17,7 +17,6 @@ public class Menu {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         User[] user = UsersManagement.UserReader("SocialGraph.json");
-        //User[] user = UsersManagement.UserReader("teste.json");
         UsersManagement g1 = new UsersManagement();
         g1.LoadVertex(user);
         g1.LoadEdges();
@@ -161,7 +160,7 @@ public class Menu {
 
                 //Determinar utilizadores que ocuparam um determinado cargo (não relacionados)
                 case 12: //topico 9
-                    g1.GetFormacoesAlcancaveis(user);
+                    g1.GetEmpresasNaoRelacionadas(user);
                     break;
 
                 //Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação

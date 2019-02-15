@@ -1,6 +1,5 @@
 package Users;
 
-import LinkedBinaryTree.ArrayUnorderedList;
 import com.google.gson.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -186,12 +185,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             System.out.println("Insira o novo valor do campo Visualizações: ");
             valor = scanner.nextInt();
             user.setVisualizacoes(valor);
-            /*JSONArray array_obj = new JSONArray();
-            for (User user1 : users) {
-                array_obj.add(user.getVisualizacoes());
-            }
-            Files.write(Paths.get("visualizacoes_alteradas.txt"), array_obj.toJSONString().getBytes());*/
-
         }
 
     }
@@ -385,25 +378,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public String findUsersThatWorkedInCompany(User[] users, User user, String empresa) {
-        int i, j;
-
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
-
-        for (i = 0; i < numVertices; i++) {
-            for (j = 0; j < users[i].getCP().length; j++) {
-                if (users[i].cp[j].getEmpresa().equals(empresa)) {
-                    for (j = 0; j < users[i].getContactos().length; j++) {
-                        if (users[i].getContactos()[j] == user.getId()) {
-                            resultList.addToRear(vertices[i]);
-                        }
-                    }
-                }
-            }
-        }
-        return resultList.toString();
-    }
-
     public void GetFormacoesAlcancaveis(User[] users) {
         String formacao, email;
         int cont = 0;
@@ -437,18 +411,27 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public void connectSkill(User[] users, String skill) {
-//
-//        ArrayOrderedList<T> menorCaminho = new ArrayOrderedList<>();
-//
-//        for (int i = 0; i < numVertices; i++) {
-//            for (int j = 0; j < users[i].getSkills().length; j++) {
-//                if (users[i].getSkills()[j].equals(skill)) {
-//                    menorCaminho.add(vertices[i]);
-//                }
-//            }
-//        }
-//            System.out.println(menorCaminho.toString());
+    public void GetEmpresasNaoRelacionadas(User[] users) {
+        String empresaA, empresaB, cargo;
+        System.out.println("Introduza o nome da empresa A: ");
+        empresaA = scanner.next();
+        System.out.println("Introduza o nome da empresa B: ");
+        empresaB = scanner.next();
+        System.out.println("Introduza o cargo que pretende: ");
+        cargo = scanner.next();
+        for (int i = 0; i < users.length; i++) {
+            for (int j = 0; j < adjMatrix.length; j++) {
+                if (adjMatrix[i][j] == false) {
+                    for (int k = 0; k < users[j].getCP().length; k++) {
+                        if (users[j].cp[k].getEmpresa().equals(empresaA)) {
+                            if(users[i].cp[k].getCargo().equals(cargo)){
+                                System.out.println("Utilizador encontrado! " + users[j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public User searchEmail(User[] users) {
