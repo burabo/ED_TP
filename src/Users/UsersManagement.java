@@ -419,16 +419,23 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         empresaB = scanner.next();
         System.out.println("Introduza o cargo que pretende: ");
         cargo = scanner.next();
+
+        System.out.println("Utilizadores não relacionados: ");
+
         for (int i = 0; i < users.length; i++) {
-            for (int j = 0; j < adjMatrix.length; j++) {
-                if (adjMatrix[i][j] == false) {
-                    for (int k = 0; k < users[j].getCP().length; k++) {
-                        if (users[j].cp[k].getEmpresa().equals(empresaA)) {
-                            if(users[i].cp[k].getCargo().equals(cargo)){
-                                System.out.println("Utilizador encontrado! " + users[j]);
+            for (int k = 0; k < users[i].getCP().length; k++) {
+                if (users[i].cp[k].getEmpresa().equals(empresaA) && users[i].cp[k].getCargo().equals(cargo)) {
+                    for (int j = 0; j < users.length; j++) {
+                        if (adjMatrix[i][j] == false) {
+                            for (int l = 0; l < users[j].getCP().length; l++) {
+                                if (users[j].cp[l].getEmpresa().equals(empresaB) && users[j].cp[l].getCargo().equals(cargo)) {
+                                    System.out.println(users[i]);
+                                    System.out.println(users[j]);
+                                }
                             }
                         }
                     }
+
                 }
             }
         }
