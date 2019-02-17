@@ -44,9 +44,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     private void addEdge(int index1, int index2, double weight) { //grafo pesado / network
         if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
             NetworkMatrix[index1][index2] = weight;
-            NetworkMatrix[index2][index1] = weight;
             adjMatrix[index1][index2] = true;
-            adjMatrix[index2][index1] = true;
         }
     }
 
@@ -58,7 +56,6 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     private void addEdge(int index1, int index2) { //grafo
         if (indexIsValid(index1) && indexIsValid(index2)) {
             adjMatrix[index1][index2] = true;
-            adjMatrix[index2][index1] = true;
         }
     }
 
@@ -406,7 +403,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 if (Double.isNaN(NetworkMatrix[i][j]) || Double.isInfinite(NetworkMatrix[i][j])) {
                     toReturn += NetworkMatrix[i][j] + " |  ";
                 } else {
-                    bd = new BigDecimal(NetworkMatrix[i][j]).setScale(5, RoundingMode.HALF_EVEN);
+                    bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
                     toReturn += bd + " |  ";
                 }
 

@@ -122,8 +122,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                         for (int k : user1.getMencoes()) {
                             if (user2 != null) {
                                 if (k == user2.getId()) {
-                                    this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
-                                    this.addEdge(user2, user1, ((double) 1 / (double) user2.getMencoes().length));
+                                        this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
                                 }
                             }
                         }
