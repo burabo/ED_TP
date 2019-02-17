@@ -441,6 +441,12 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
+    public void connectSkill(User[] users) {
+        String skill;
+        System.out.println("Introduza a skill: ");
+        skill = scanner.next();
+    }
+
     public User searchEmail(User[] users) {
         String email;
         int count = 0;

@@ -165,10 +165,7 @@ public class Menu {
 
                 //Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação
                 case 13: //tópico 10
-
-                    /*System.out.println("Introduza a skill: ");
-                    skill = scanner.next();
-                    g1.connectSkill(user, skill);*/
+                    g1.connectSkill(user);
                     break;
 
                 //Matriz de Adjacência    
