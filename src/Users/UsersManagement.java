@@ -127,6 +127,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                             if (user2 != null) {
                                 if (k == user2.getId()) {
                                     this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
+                                    this.addEdge(user2, user1, ((double) 1 / (double) user2.getMencoes().length));
                                 }
                             }
                         }
@@ -167,14 +168,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 novasMencoes[i] = scanner.nextInt();
             }
             user.setMencoes(novasMencoes);
-            JSONObject obj = new JSONObject();
-            JSONArray array_obj = new JSONArray();
-            for (int i = 0; i < user.getMencoes().length; i++) {
-                obj.put("Menção nº " + i + ": ", user.getMencoes()[i]);
-
-            }
-            array_obj.add(obj);
-            Files.write(Paths.get("mencoes_alteradas.txt"), array_obj.toJSONString().getBytes());
         }
     }
 
