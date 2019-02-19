@@ -113,18 +113,7 @@ public class User implements Comparable {
                 + "\n\t|Visualizações: " + visualizacoes;
     }
 
-    public String toStringJSON() {
-        return "{id: " + id
-                + ",nome: " + nome
-                + ",idade: " + idade
-                + ",email: " + email
-                + ",formacaoAcademica: " + Arrays.toString(fa)
-                + ",cargosProfissionais: " + Arrays.toString(cp)
-                + ",skills: " + Arrays.toString(skills)
-                + ",contacts: " + Arrays.toString(contactos)
-                + ",mencoes: " + Arrays.toString(mencoes)
-                + ",visualizacoes: " + visualizacoes + "}";
-    }
+    
     
     @Override
     public int compareTo(Object o) {

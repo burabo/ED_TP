@@ -312,8 +312,10 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 
             }
             System.out.println("Nº de utilizadores alcançáveis: " + c);
-            System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views + " vs " + media_views_geral);
-            System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes + " vs " + media_mencoes_geral);
+            System.out.println("Visualizações (utilizadores alcançáveis vs geral): " + media_views + " vs " + media_views_geral);
+            System.out.println("Menções (utilizadores alcançáveis vs geral): " + media_mencoes + " vs " + media_mencoes_geral);
+            System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views / c + " vs " + media_views_geral / users.length);
+            System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes / c + " vs " + media_mencoes_geral / users.length);
         }
 
     }
@@ -443,22 +445,20 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             }
         }
     }
-    
-    public ArrayOrderedList<User> connectFormacao(T id,String formacao) throws ListEmptyException {
-        
+
+    public ArrayOrderedList<User> connectFormacao(T id, String formacao) throws ListEmptyException {
+
         Iterator it = this.iteratorDFS(id);
         LinkedList<User> tmp = new LinkedList<>();
         ArrayOrderedList<User> toReturn = new ArrayOrderedList<>();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             tmp.add((User) it.next());
         }
-        for(int i = 0; i < tmp.size(); i++){
-            for(int j = 0; j < tmp.get(i).getFA().length; j++){
-                if(tmp.get(i).fa[j].getFormacao().equals(formacao)){
+        for (int i = 0; i < tmp.size(); i++) {
+            for (int j = 0; j < tmp.get(i).getFA().length; j++) {
+                if (tmp.get(i).fa[j].getFormacao().equals(formacao)) {
                     toReturn.add(tmp.get(i));
-                    
-                    
-                    
+
                 }
             }
         }
