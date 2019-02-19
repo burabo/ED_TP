@@ -1,5 +1,7 @@
 package Users;
 
+import Exceptions.ListEmptyException;
+import LinkedBinaryTree.ArrayOrderedList;
 import com.google.gson.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,7 +126,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                         for (int k : user1.getMencoes()) {
                             if (user2 != null) {
                                 if (k == user2.getId()) {
-                                        this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
+                                    this.addEdge(user1, user2, ((double) 1 / (double) user1.getMencoes().length));
                                 }
                             }
                         }
@@ -439,11 +443,27 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             }
         }
     }
-
-    public void connectSkill(User[] users) {
-        String skill;
-        System.out.println("Introduza a skill: ");
-        skill = scanner.next();
+    
+    public ArrayOrderedList<User> connectSkill(T id,String formacao) throws ListEmptyException {
+        
+        Iterator it = this.iteratorDFS(id);
+        LinkedList<User> tmp = new LinkedList<>();
+        ArrayOrderedList<User> toReturn = new ArrayOrderedList<>();
+        while(it.hasNext()){
+            tmp.add((User) it.next());
+        }
+        for(int i = 0; i < tmp.size(); i++){
+            for(int j = 0; j < tmp.get(i).getFA().length; j++){
+                if(tmp.get(i).fa[j].getFormacao().equals(formacao)){
+                    toReturn.add(tmp.get(i));
+                    
+                    
+                    
+                }
+            }
+        }
+        System.out.println(toReturn.toString());
+        return toReturn;
     }
 
     public User searchEmail(User[] users) {

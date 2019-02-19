@@ -5,6 +5,7 @@ package Users;
  *
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
+import Exceptions.ListEmptyException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ public class Menu {
 
     Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ListEmptyException {
 
         User[] user = UsersManagement.UserReader("SocialGraph.json");
         UsersManagement g1 = new UsersManagement();
@@ -23,7 +24,7 @@ public class Menu {
         Menu menu = new Menu(user, g1);
     }
 
-    public Menu(User[] user, UsersManagement g1) throws IOException {
+    public Menu(User[] user, UsersManagement g1) throws IOException, ListEmptyException {
 
         User newUser;
         int option;
@@ -165,7 +166,11 @@ public class Menu {
 
                 //Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação
                 case 13: //tópico 10
-                    g1.connectSkill(user);
+                    String formacao;
+                    newUser = g1.searchEmail(user);
+                    System.out.print("Introduza a formação pretendida: ");
+                    formacao = scanner.next();
+                    g1.connectSkill(newUser, formacao);
                     break;
 
                 //Matriz de Adjacência    
