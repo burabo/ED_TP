@@ -444,7 +444,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
     
-    public ArrayOrderedList<User> connectSkill(T id,String formacao) throws ListEmptyException {
+    public ArrayOrderedList<User> connectFormacao(T id,String formacao) throws ListEmptyException {
         
         Iterator it = this.iteratorDFS(id);
         LinkedList<User> tmp = new LinkedList<>();

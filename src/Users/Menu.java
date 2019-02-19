@@ -170,7 +170,7 @@ public class Menu {
                     newUser = g1.searchEmail(user);
                     System.out.print("Introduza a formação pretendida: ");
                     formacao = scanner.next();
-                    g1.connectSkill(newUser, formacao);
+                    g1.connectFormacao(newUser, formacao);
                     break;
 
                 //Matriz de Adjacência    
