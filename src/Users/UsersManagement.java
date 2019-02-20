@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -115,7 +114,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
-    public void LoadEdges() {
+    public void LoadEdgesMencoes() {
         Object[] vetor_vertices = this.vertices;
         for (int c = 0; c < vetor_vertices.length; c++) {
             User user1 = (User) vetor_vertices[c];
@@ -136,6 +135,26 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
     }
 
+    public void LoadEdgesContactos() {
+        Object[] vetor_vertices = this.vertices;
+        for (int c = 0; c < vetor_vertices.length; c++) {
+            User user1 = (User) vetor_vertices[c];
+            for (int v = 0; v < vetor_vertices.length; v++) {
+                User user2 = (User) vetor_vertices[v];
+//                if (c < v) {
+                if (user1 != null) {
+                    for (int k : user1.getContactos()) {
+                        if (user2 != null) {
+                            if (k == user2.getId()) {
+                                this.addEdge(user1, user2, ((double) 1 / (double) user2.getContactos().length));
+                            }
+                        }
+                    }
+                }
+//                }
+            }
+        }
+    }
     public void LoadProfile(User[] users) {
         user = searchEmail(users);
 
@@ -436,28 +455,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 }
             }
         }
-    }
-
-    public void connectSkill(User[] users) {
-
-        ArrayOrderedList toReturn = new ArrayOrderedList();
-
-        String skill;
-        System.out.println("Introduza a skill: ");
-        skill = scanner.next();
-
-        Iterator it = this.iteratorDFS(vertices[0]);
-        LinkedList tmp = new LinkedList();
-
-        while (it.hasNext()) {
-            tmp.add(it.next());
-        }
-
-//        for (int i = 0; i < tmp.size()) {
-//            for (int j = 0; j < tmp.get(i).) {
-//               
-//            }
-//        }
     }
 
     public ArrayOrderedList<User> connectFormacao(T id, String formacao) throws ListEmptyException {

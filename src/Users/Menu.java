@@ -19,12 +19,16 @@ public class Menu {
 
         User[] user = UsersManagement.UserReader("SocialGraph.json");
         UsersManagement g1 = new UsersManagement();
+        UsersManagement g2 = new UsersManagement();
         g1.LoadVertex(user);
-        g1.LoadEdges();
-        Menu menu = new Menu(user, g1);
+        g1.LoadEdgesMencoes();
+        g2.LoadVertex(user);
+        g2.LoadEdgesContactos();
+
+        Menu menu = new Menu(user, g1, g2);
     }
 
-    public Menu(User[] user, UsersManagement g1) throws IOException, ListEmptyException {
+    public Menu(User[] user, UsersManagement g1, UsersManagement g2) throws IOException, ListEmptyException {
 
         User newUser;
         int option;
@@ -42,7 +46,8 @@ public class Menu {
             "Determinar utilizadores que ocuparam um determinado cargo (não relacionados)",
             "Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação",
             "Apresentar matriz de adjacência",
-            "Apresentar matriz de custo"};
+            "Apresentar matriz de custo",
+            "BONIFICAÇÃO - Grafo baseado nos contactos do utilizador para as ligações e calcular o caminho mais curto"};
 
         do {
             do {
@@ -102,30 +107,28 @@ public class Menu {
                             a = i;
                             cont++;
                         }
-                    } 
+                    }
 
-                        for (i = 0; i < user.length; i++) {
-                            if (user[i].getEmail().equals(user2)) {
-                                b = i;
-                                cont++;
-                            }
-
+                    for (i = 0; i < user.length; i++) {
+                        if (user[i].getEmail().equals(user2)) {
+                            b = i;
+                            cont++;
                         }
 
-                        if (cont != 2) {
-                            System.out.print("Email/s não existe/existem ");
-                        } else {
-                            Iterator sp = g1.iteratorShortestPath(user[a], user[b]);
-                            while (sp.hasNext()) {
-                                System.out.println(sp.next());
-                            }
-                        }
-                        break;
+                    }
 
-                        //Utilizadores alcançáveis a partir de um utilizador
-                    
-            
-            case 7: //tópico 5
+                    if (cont != 2) {
+                        System.out.print("Email/s não existe/existem ");
+                    } else {
+                        Iterator sp = g1.iteratorShortestPath(user[a], user[b]);
+                        while (sp.hasNext()) {
+                            System.out.println(sp.next());
+                        }
+                    }
+                    break;
+
+                //Utilizadores alcançáveis a partir de um utilizador
+                case 7: //tópico 5
                     newUser = g1.searchEmail(user);
                     System.out.println("\nIterator BFS\n");
                     Iterator bfs = g1.iteratorBFS(newUser);
@@ -182,9 +185,46 @@ public class Menu {
                 case 15:
                     System.out.println(g1.NetworkTable());
                     break;
+                    
+                    
+                case 16: //REQUISITO DE BONIFICAÇÃO
+                    System.out.println(g2.NetworkTable());
+                    String util1, util2;
+                    int x = 0, y = 0;
+
+                    int c = 0;
+                    System.out.println("\nCusto de cada caminho: \n");
+                    System.out.print("Email do utilizador de partida: ");
+                    util1 = scanner.next();
+                    System.out.print("Email do utilizador de destino: ");
+                    util2 = scanner.next();
+                    for (int z = 0; z < user.length; z++) {
+                        if (user[z].getEmail().equals(util1)) {
+                            x = z;
+                            c++;
+                        }
+                    }
+
+                    for (int z = 0; z < user.length; z++) {
+                        if (user[z].getEmail().equals(util2)) {
+                            y = z;
+                            c++;
+                        }
+
+                    }
+
+                    if (c != 2) {
+                        System.out.print("Email(s) não existe(m) ");
+                    } else {
+                        Iterator sp = g2.iteratorShortestPath(user[x], user[y]);
+                        while (sp.hasNext()) {
+                            System.out.println(sp.next());
+                        }
+                    }
+                    break;
             }
 
         } while (option != 0);
-        }
-
     }
+
+}
