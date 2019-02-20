@@ -155,6 +155,7 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             }
         }
     }
+
     public void LoadProfile(User[] users) {
         user = searchEmail(users);
 
@@ -325,8 +326,11 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             System.out.println("Nº de utilizadores alcançáveis: " + c);
             System.out.println("Visualizações (utilizadores alcançáveis vs geral): " + media_views + " vs " + media_views_geral);
             System.out.println("Menções (utilizadores alcançáveis vs geral): " + media_mencoes + " vs " + media_mencoes_geral);
-            System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views / c + " vs " + media_views_geral / users.length);
-            System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes / c + " vs " + media_mencoes_geral / users.length);
+            if (c != 0) {
+                System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views / c + " vs " + media_views_geral / users.length);
+                System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes / c + " vs " + media_mencoes_geral / users.length);
+            }
+
         }
 
     }

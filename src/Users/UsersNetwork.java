@@ -258,7 +258,6 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         }
 
         //naoVisitados.remove(vertices[startVertex]);
-
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
 
@@ -297,6 +296,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
     @Override
     public boolean isConnected() {
+        
         int visited[] = new int[adjMatrix.length];
 
         for (int row = 0; row < adjMatrix.length; row++) {
