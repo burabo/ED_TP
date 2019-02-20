@@ -1,5 +1,6 @@
 package Users;
 
+import Exceptions.ListEmptyException;
 import LinkedBinaryTree.ArrayOrderedList;
 import com.google.gson.*;
 import java.io.FileNotFoundException;
@@ -121,15 +122,15 @@ public class UsersManagement<T> extends UsersNetwork<T> {
             for (int v = 0; v < vetor_vertices.length; v++) {
                 User user2 = (User) vetor_vertices[v];
 //                if (c < v) {
-                    if (user1 != null) {
-                        for (int k : user1.getMencoes()) {
-                            if (user2 != null) {
-                                if (k == user2.getId()) {
-                                    this.addEdge(user1, user2, ((double) 1 / (double) user2.getMencoes().length));
-                                }
+                if (user1 != null) {
+                    for (int k : user1.getMencoes()) {
+                        if (user2 != null) {
+                            if (k == user2.getId()) {
+                                this.addEdge(user1, user2, ((double) 1 / (double) user2.getMencoes().length));
                             }
                         }
                     }
+                }
 //                }
             }
         }
@@ -166,14 +167,6 @@ public class UsersManagement<T> extends UsersNetwork<T> {
                 novasMencoes[i] = scanner.nextInt();
             }
             user.setMencoes(novasMencoes);
-            JSONObject obj = new JSONObject();
-            JSONArray array_obj = new JSONArray();
-            for (int i = 0; i < user.getMencoes().length; i++) {
-                obj.put("Menção nº " + i + ": ", user.getMencoes()[i]);
-
-            }
-            array_obj.add(obj);
-            Files.write(Paths.get("mencoes_alteradas.txt"), array_obj.toJSONString().getBytes());
         }
     }
 
@@ -311,8 +304,10 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 
             }
             System.out.println("Nº de utilizadores alcançáveis: " + c);
-            System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views + " vs " + media_views_geral);
-            System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes + " vs " + media_mencoes_geral);
+            System.out.println("Visualizações (utilizadores alcançáveis vs geral): " + media_views + " vs " + media_views_geral);
+            System.out.println("Menções (utilizadores alcançáveis vs geral): " + media_mencoes + " vs " + media_mencoes_geral);
+            System.out.println("Média Visualizações (utilizadores alcançáveis vs geral): " + media_views / c + " vs " + media_views_geral / users.length);
+            System.out.println("Média Menções (utilizadores alcançáveis vs geral): " + media_mencoes / c + " vs " + media_mencoes_geral / users.length);
         }
 
     }
@@ -463,6 +458,27 @@ public class UsersManagement<T> extends UsersNetwork<T> {
 //               
 //            }
 //        }
+    }
+
+    public ArrayOrderedList<User> connectFormacao(T id, String formacao) throws ListEmptyException {
+
+        Iterator it = this.iteratorDFS(id);
+        LinkedList<User> tmp = new LinkedList<>();
+        ArrayOrderedList<User> toReturn = new ArrayOrderedList<>();
+        while (it.hasNext()) {
+            tmp.add((User) it.next());
+        }
+        for (int i = 0; i < tmp.size(); i++) {
+            for (int j = 0; j < tmp.get(i).getFA().length; j++) {
+                if (tmp.get(i).fa[j].getFormacao().equals(formacao)) {
+                    toReturn.add(tmp.get(i));
+
+                }
+            }
+        }
+        System.out.println(toReturn.toString());
+        return toReturn;
+
     }
 
     public User searchEmail(User[] users) {

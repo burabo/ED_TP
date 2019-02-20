@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * Nome: GABRIEL LOPES DOS SANTOS Numero:8170170 Turma:LEI
  */
-public class User {
+public class User implements Comparable {
 
     private int id;
     private String nome, email;
@@ -113,17 +113,16 @@ public class User {
                 + "\n\t|Visualizações: " + visualizacoes;
     }
 
-    public String toStringJSON() {
-        return "{id: " + id
-                + ",nome: " + nome
-                + ",idade: " + idade
-                + ",email: " + email
-                + ",formacaoAcademica: " + Arrays.toString(fa)
-                + ",cargosProfissionais: " + Arrays.toString(cp)
-                + ",skills: " + Arrays.toString(skills)
-                + ",contacts: " + Arrays.toString(contactos)
-                + ",mencoes: " + Arrays.toString(mencoes)
-                + ",visualizacoes: " + visualizacoes + "}";
+    
+    
+    @Override
+    public int compareTo(Object o) {
+        int result;
+        if(this.equals(o) == true){
+            result = 1;
+        }else result = 0;
+     
+        return result;
     }
 }
 
@@ -157,8 +156,7 @@ class formacaoAcademica {
     public String toString() {
         return "Ano: " + ano + ", Formação: " + formacao;
     }
-    
-   
+
 }
 
 class cargosProfissionais {
