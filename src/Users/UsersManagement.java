@@ -498,4 +498,18 @@ public class UsersManagement<T> extends UsersNetwork<T> {
         }
         return null;
     }
+
+    public void newNetworkMatrix(User[] users) {
+       
+        for (int i = 0; i < vertices.length; i++) {
+            for (int j = 0; j < vertices.length; j++) {
+                if (adjMatrix[i][j] != false) {
+                    NetworkMatrixFormacoes[i][j] = ((double)1 /(double) users[j].getFA().length);
+                } else {
+                    NetworkMatrixFormacoes[i][j] = 0;
+                }
+            }
+        }
+    }
+    
 }

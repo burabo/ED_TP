@@ -26,6 +26,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
     protected int numVertices;   // number of vertices in the graph
     protected boolean[][] adjMatrix;   // adjacency matrix
     protected double[][] NetworkMatrix;   // Network matrix
+    protected double[][] NetworkMatrixFormacoes;   // Network matrix
     protected T[] vertices;   // values of vertices
 
     public UsersNetwork() {
@@ -33,6 +34,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         numVertices = 0;
         this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         this.NetworkMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
+        this.NetworkMatrixFormacoes = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
     }
 
@@ -230,7 +232,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         return null;
     }
 
-    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException {
+    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
         int i = 0, j = 0;
         //Guarda os vértices pertencentes ao menor caminho encontrado
         ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
@@ -245,6 +247,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         // Variavel que marca o vizinho do vertice atualmente visitado
         int vizinho;
         double menor = 9999;
+        boolean found;
 
         //Iguala todos os elementos de distânica a 0
         for (i = 0; i < numVertices; i++) {
@@ -255,6 +258,8 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         for (i = 0; i < vertices.length; i++) {
             naoVisitados.addToRear(vertices[i]);
         }
+
+        //naoVisitados.remove(vertices[startVertex]);
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
 
@@ -286,6 +291,76 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         return menorCaminho.iterator();
     }
 
+    public Iterator iteratorShortestPathBonus(Object startVertex, Object targetVertex) {
+        try {
+            return iteratorShortestPathBonus(getIndex((T) startVertex), getIndex((T) targetVertex));
+        } catch (ListEmptyException ex) {
+            Logger.getLogger(UsersNetwork.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Iterator iteratorShortestPathBonus(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
+
+        int i = 0, j = 0;
+        //Guarda os vértices pertencentes ao menor caminho encontrado
+        ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
+        //Guarda os vértices que ainda não foram visitados
+        ArrayUnorderedList<T> naoVisitados = new ArrayUnorderedList<>();
+        //Guarda as distâncias
+        double distancia[] = new double[numVertices];
+        // Variavel que recebe os vertices pertencentes ao menor caminho
+        int verticeCaminho = startVertex;
+        // Variavel que guarda o vertice que esta a ser visitado
+        int actual;
+        // Variavel que marca o vizinho do vertice atualmente visitado
+        int vizinho;
+        double menor = 9999;
+        boolean found;
+
+        //Iguala todos os elementos de distânica a 0
+        for (i = 0; i < numVertices; i++) {
+            distancia[i] = 0;
+        }
+
+        //Adiciona todos os elementos à lista dos não visitados
+        for (i = 0; i < vertices.length; i++) {
+            naoVisitados.addToRear(vertices[i]);
+        }
+
+        //naoVisitados.remove(vertices[startVertex]);
+        //Enquanto todos os vértices não tiverem sido visitados...
+        while (naoVisitados.contains(vertices[targetVertex])) {
+
+            actual = verticeCaminho;
+
+            for (i = 0; i < numVertices; i++) {
+                if (NetworkMatrixFormacoes[actual][i] != 0 && naoVisitados.contains(vertices[i])) {
+                    vizinho = getIndex(vertices[i]);
+                    if (NetworkMatrixFormacoes[actual][i] < menor) {
+                        menor = NetworkMatrixFormacoes[actual][i];
+                        verticeCaminho = vizinho;
+                        System.out.println("Vértice actual:" + actual);
+
+                    }
+                    menorCaminho.addToRear(menor);
+                    distancia[verticeCaminho] += menor;
+                    menor = 9999;
+                    naoVisitados.remove(vertices[verticeCaminho]);
+                }
+            }
+
+        }
+        
+        System.out.println("Vértice actual:" + targetVertex);
+        double num = 0;
+        for (i = 0; i < numVertices; i++) {
+            num += distancia[i];
+        }
+        System.out.println("Soma: " + num);
+        return menorCaminho.iterator();
+    }
+
     @Override
     public boolean isEmpty() {
         return numVertices == 0;
@@ -293,15 +368,21 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
     @Override
     public boolean isConnected() {
+
         int visited[] = new int[adjMatrix.length];
+
         for (int row = 0; row < adjMatrix.length; row++) {
             for (int col = 0; col < adjMatrix.length; col++) {
+
                 if (adjMatrix[row][col] == true && visited[row] == 0) {
                     visited[row] = 1;
                 }
+
             }
         }
+
         boolean connected = false;
+
         for (int vertex = 0; vertex < adjMatrix.length; vertex++) {
             if (visited[vertex] == 1) {
                 connected = true;
@@ -310,6 +391,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 break;
             }
         }
+
         return connected;
     }
 
@@ -327,7 +409,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 }
             }
         }
-        return count == ((this.numVertices * this.numVertices) - this.numVertices);
+        return count == (this.numVertices * this.numVertices);
 
     }
 
@@ -335,7 +417,9 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         T[] newVertices = (T[]) (new Object[vertices.length + 1]);
         boolean[][] newAdjMatrix = new boolean[adjMatrix.length + 1][adjMatrix.length + 1];
         double[][] newNetworkMatrix = new double[NetworkMatrix.length + 1][NetworkMatrix.length + 1];
+        double[][] newNetworkMatrixFormacoes = new double[NetworkMatrixFormacoes.length + 1][NetworkMatrixFormacoes.length + 1];
 
+        
         for (int i = 0; i < vertices.length; i++) {
             newVertices[i] = vertices[i];
 
@@ -352,10 +436,18 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 newNetworkMatrix[i][j] = NetworkMatrix[i][j];
             }
         }
+        
+         for (int i = 0; i < NetworkMatrixFormacoes.length; i++) {
+            for (int j = 0; j < NetworkMatrixFormacoes.length; j++) {
+                newNetworkMatrixFormacoes[i][j] = NetworkMatrix[i][j];
+            }
+        }
 
         vertices = newVertices;
         adjMatrix = newAdjMatrix;
         NetworkMatrix = newNetworkMatrix;
+        NetworkMatrixFormacoes = newNetworkMatrixFormacoes;
+
     }
 
     @Override
@@ -392,6 +484,33 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                     toReturn += NetworkMatrix[i][j] + " |  ";
                 } else {
                     bd = new BigDecimal(NetworkMatrix[i][j]).setScale(3, RoundingMode.HALF_EVEN);
+                    toReturn += bd + " |  ";
+                }
+
+            }
+            toReturn += "\n";
+
+        }
+
+        return toReturn;
+    }
+    
+      public String NetworkFormacoesTable() {
+        BigDecimal bd;
+        String toReturn = "\nMatriz de Adjacência Network Formações:\n\n";
+        toReturn += " \t";
+        for (int x = 0; x < NetworkMatrixFormacoes.length; x++) {
+            toReturn += "  " + x + "   |  ";
+        }
+        toReturn += "\n\n";
+        for (int i = 0; i < NetworkMatrixFormacoes.length; i++) {
+
+            toReturn += "" + i + "\t";
+            for (int j = 0; j < NetworkMatrixFormacoes.length; j++) {
+                if (Double.isNaN(NetworkMatrixFormacoes[i][j]) || Double.isInfinite(NetworkMatrixFormacoes[i][j])) {
+                    toReturn += NetworkMatrixFormacoes[i][j] + " |  ";
+                } else {
+                    bd = new BigDecimal(NetworkMatrixFormacoes[i][j]).setScale(3, RoundingMode.HALF_EVEN);
                     toReturn += bd + " |  ";
                 }
 

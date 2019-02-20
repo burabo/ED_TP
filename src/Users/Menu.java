@@ -47,7 +47,8 @@ public class Menu {
             "Apresentar lista de utilizadores que contém uma determinada formação ordenada pelo menor custo de ligação",
             "Apresentar matriz de adjacência",
             "Apresentar matriz de custo",
-            "BONIFICAÇÃO - Grafo baseado nos contactos do utilizador para as ligações e calcular o caminho mais curto"};
+            "BONIFICAÇÃO - Grafo baseado nos contactos do utilizador para as ligações e calcular o caminho mais curto",
+            "BONIFICAÇÃO - Caminho mais curto pelo número de formações de um utilizador"};
 
         do {
             do {
@@ -185,8 +186,7 @@ public class Menu {
                 case 15:
                     System.out.println(g1.NetworkTable());
                     break;
-                    
-                    
+
                 case 16: //REQUISITO DE BONIFICAÇÃO
                     System.out.println(g2.NetworkTable());
                     System.out.println(g2.GraphTable());
@@ -220,6 +220,44 @@ public class Menu {
                         System.out.print("Email(s) não existe(m) ");
                     } else {
                         Iterator sp = g2.iteratorShortestPath(user[x], user[y]);
+                        while (sp.hasNext()) {
+                            System.out.println(sp.next());
+                        }
+                    }
+                    break;
+
+                //Descobrir o caminho mais curto entre 2 utilizadores pelas formações
+                case 17: //tópico 4
+                    int valor1 = 0, valor2 = 0;
+                    g1.newNetworkMatrix(user);
+                    System.out.print("Nova Matriz com base nas formações: ");
+                    System.out.println(g1.NetworkFormacoesTable());
+                    cont = 0;
+                    System.out.println("\nCusto de cada caminho: \n");
+                    System.out.print("Email do utilizador de partida: ");
+                    user1 = scanner.next();
+                    System.out.print("Email do utilizador de destino: ");
+                    user2 = scanner.next();
+                    for (i = 0; i < user.length; i++) {
+                        if (user[i].getEmail().equals(user1)) {
+                            valor1 = i;
+                            cont++;
+                        }
+                    }
+
+                    for (i = 0; i < user.length; i++) {
+                        if (user[i].getEmail().equals(user2)) {
+                            valor2 = i;
+                            cont++;
+                        }
+
+                        
+                    }
+
+                    if (cont != 2) {
+                        System.out.print("Email/s não existe/existem ");
+                    } else {
+                        Iterator sp = g1.iteratorShortestPathBonus(user[valor1], user[valor2]);
                         while (sp.hasNext()) {
                             System.out.println(sp.next());
                         }
