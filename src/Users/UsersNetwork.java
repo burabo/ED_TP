@@ -230,7 +230,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         return null;
     }
 
-    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException { //FALTA FAZER
+    public Iterator iteratorShortestPath(int startVertex, int targetVertex) throws ListEmptyException {
         int i = 0, j = 0;
         //Guarda os vértices pertencentes ao menor caminho encontrado
         ArrayUnorderedList<Double> menorCaminho = new ArrayUnorderedList<>();
@@ -245,7 +245,6 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         // Variavel que marca o vizinho do vertice atualmente visitado
         int vizinho;
         double menor = 9999;
-        boolean found;
 
         //Iguala todos os elementos de distânica a 0
         for (i = 0; i < numVertices; i++) {
@@ -256,8 +255,6 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         for (i = 0; i < vertices.length; i++) {
             naoVisitados.addToRear(vertices[i]);
         }
-
-        //naoVisitados.remove(vertices[startVertex]);
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
 
@@ -296,21 +293,15 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
     @Override
     public boolean isConnected() {
-        
         int visited[] = new int[adjMatrix.length];
-
         for (int row = 0; row < adjMatrix.length; row++) {
             for (int col = 0; col < adjMatrix.length; col++) {
-
                 if (adjMatrix[row][col] == true && visited[row] == 0) {
                     visited[row] = 1;
                 }
-
             }
         }
-
         boolean connected = false;
-
         for (int vertex = 0; vertex < adjMatrix.length; vertex++) {
             if (visited[vertex] == 1) {
                 connected = true;
@@ -319,7 +310,6 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 break;
             }
         }
-
         return connected;
     }
 
@@ -337,7 +327,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                 }
             }
         }
-        return count == (this.numVertices * this.numVertices);
+        return count == ((this.numVertices * this.numVertices) - this.numVertices);
 
     }
 

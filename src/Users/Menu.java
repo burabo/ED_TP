@@ -189,6 +189,8 @@ public class Menu {
                     
                 case 16: //REQUISITO DE BONIFICAÇÃO
                     System.out.println(g2.NetworkTable());
+                    System.out.println(g2.GraphTable());
+                    //System.out.println(g2.isConnected());
                     //System.out.println(g2.IsNetworkComplete());
                     String util1, util2;
                     int x = 0, y = 0;
