@@ -86,6 +86,9 @@ public class Menu {
                 case 6: //tópico 4
                     String user1,
                      user2;
+                    int i,
+                     a = 0,
+                     b = 0;
 
                     int cont = 0;
                     System.out.println("\nCusto de cada caminho: \n");
@@ -93,38 +96,35 @@ public class Menu {
                     user1 = scanner.next();
                     System.out.print("Email do utilizador de destino: ");
                     user2 = scanner.next();
-                    for (int x = 0; x < user.length; x++) {
-                        if (user[x].getEmail().equals(user1) || user[x].getEmail().equals(user2)) {
+                    for (i = 0; i < user.length; i++) {
+                        if (user[i].getEmail().equals(user1)) {
+                            a = i;
                             cont++;
                         }
+                    } 
 
-                    }
-                    if (cont == 2) {
-                        for (int i = 0; i < user.length; i++) {
-                            if (user[i].getEmail().equals(user1)) {
-                                for (int j = 0; j < user.length; j++) {
-                                    if (user[j].getEmail().equals(user2)) {
-                                        Iterator sp = g1.iteratorShortestPath(user[i], user[j]);
-                                        while (sp.hasNext()) {
-                                            if (sp.next() != null) {
-                                                System.out.println(sp.next());
-                                            } else {
-                                                System.out.println("não existe um caminho possivel");
-                                            }
+                        for (i = 0; i < user.length; i++) {
+                            if (user[i].getEmail().equals(user2)) {
+                                b = i;
+                                cont++;
+                            }
 
-                                        }
-                                    }
+                        }
 
-                                }
+                        if (cont != 2) {
+                            System.out.print("Email/s não existe/existem ");
+                        } else {
+                            Iterator sp = g1.iteratorShortestPath(user[a], user[b]);
+                            while (sp.hasNext()) {
+                                System.out.println(sp.next());
                             }
                         }
-                    } else {
-                        System.out.println("O(s) email(s) não existe(m)");
-                    }
-                    break;
+                        break;
 
-                //Utilizadores alcançáveis a partir de um utilizador
-                case 7: //tópico 5
+                        //Utilizadores alcançáveis a partir de um utilizador
+                    
+            
+            case 7: //tópico 5
                     newUser = g1.searchEmail(user);
                     System.out.println("\nIterator BFS\n");
                     Iterator bfs = g1.iteratorBFS(newUser);
@@ -180,6 +180,6 @@ public class Menu {
             }
 
         } while (option != 0);
-    }
+        }
 
-}
+    }

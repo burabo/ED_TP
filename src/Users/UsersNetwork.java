@@ -43,8 +43,9 @@ public class UsersNetwork<T> implements NetworkADT<T> {
 
     private void addEdge(int index1, int index2, double weight) { //grafo pesado / network
         if (indexIsValidNetwork(index1) && indexIsValidNetwork(index2)) {
-            NetworkMatrix[index1][index2] = weight;
             adjMatrix[index1][index2] = true;
+            NetworkMatrix[index1][index2] = weight;
+
         }
     }
 
@@ -244,6 +245,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         // Variavel que marca o vizinho do vertice atualmente visitado
         int vizinho;
         double menor = 9999;
+        boolean found;
 
         //Iguala todos os elementos de distânica a 0
         for (i = 0; i < numVertices; i++) {
@@ -255,7 +257,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
             naoVisitados.addToRear(vertices[i]);
         }
 
-        naoVisitados.remove(vertices[startVertex]);
+        //naoVisitados.remove(vertices[startVertex]);
 
         //Enquanto todos os vértices não tiverem sido visitados...
         while (naoVisitados.contains(vertices[targetVertex])) {
@@ -268,18 +270,15 @@ public class UsersNetwork<T> implements NetworkADT<T> {
                     if (NetworkMatrix[actual][i] < menor) {
                         menor = NetworkMatrix[actual][i];
                         verticeCaminho = vizinho;
-                    }
+                        System.out.println("Vértice actual:" + actual);
 
+                    }
+                    menorCaminho.addToRear(menor);
+                    distancia[verticeCaminho] += menor;
+                    menor = 9999;
+                    naoVisitados.remove(vertices[verticeCaminho]);
                 }
             }
-            if ((menor != Double.POSITIVE_INFINITY) || (menor != Double.NEGATIVE_INFINITY) || (menor != Double.NaN)) {
-                menorCaminho.addToRear(menor);
-                distancia[verticeCaminho] += menor;
-                menor = 9999;
-                naoVisitados.remove(vertices[verticeCaminho]);
-                System.out.println("Vértice actual:" + actual);
-            }
-            return null;
 
         }
         System.out.println("Vértice actual:" + targetVertex);
@@ -287,8 +286,7 @@ public class UsersNetwork<T> implements NetworkADT<T> {
         for (i = 0; i < numVertices; i++) {
             num += distancia[i];
         }
-        //System.out.println("Custo total: " + num);
-
+        System.out.println("Soma: " + num);
         return menorCaminho.iterator();
     }
 
